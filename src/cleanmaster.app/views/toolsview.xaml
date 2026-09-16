@@ -1,0 +1,97 @@
+﻿<UserControl x:Class="CleanMaster.App.Views.ToolsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             FontFamily="Microsoft YaHei UI, Segoe UI" FontSize="13" Background="Transparent">
+  <ScrollViewer VerticalScrollBarVisibility="Auto">
+    <StackPanel Margin="14,10,14,20" MaxWidth="980" HorizontalAlignment="Left">
+
+      <Border Style="{StaticResource CardPanel}" Margin="0,0,0,12">
+        <StackPanel>
+          <TextBlock Text="系统还原点" Style="{StaticResource SectionText}"/>
+          <TextBlock Style="{StaticResource MutedText}" TextWrapping="Wrap"
+                     Text="清理前创建系统还原点，系统级问题可通过「系统还原」回滚。若系统还原未启用或 24 小时内已创建过，会被自动跳过（不影响清理）。"/>
+          <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+            <Button x:Name="BtnRestorePoint" Content="创建系统还原点" Width="140" Click="BtnRestorePoint_Click"/>
+            <TextBlock x:Name="TxtRestoreResult" VerticalAlignment="Center" Margin="12,0,0,0" FontSize="12" Foreground="{StaticResource Text2Brush}"/>
+          </StackPanel>
+        </StackPanel>
+      </Border>
+
+      <Border Style="{StaticResource CardPanel}" Margin="0,0,0,12">
+        <StackPanel>
+          <TextBlock Text="Windows 组件存储维护（DISM）" Style="{StaticResource SectionText}"/>
+          <TextBlock Style="{StaticResource MutedText}" TextWrapping="Wrap"
+                     Text="分析或清理系统组件存储（WinSxS）中的旧版本组件，通常可释放数 GB。清理属于高级操作，可能需要 5-15 分钟，期间请勿关闭程序；需要管理员权限。"/>
+          <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+            <Button x:Name="BtnDismAnalyze" Content="分析组件存储（只读）" Width="150" Click="BtnDismAnalyze_Click"/>
+            <Button x:Name="BtnDismClean" Content="清理组件存储（高级）…" Width="162" Margin="8,0,0,0" Click="BtnDismClean_Click"/>
+          </StackPanel>
+          <TextBox x:Name="TxtDismOutput" Height="150" Margin="0,10,0,0" IsReadOnly="True"
+                   FontFamily="Consolas, Microsoft YaHei UI" FontSize="11.5" VerticalScrollBarVisibility="Auto"
+                   TextWrapping="NoWrap" VerticalContentAlignment="Top" AcceptsReturn="True"/>
+        </StackPanel>
+      </Border>
+
+      <Border Style="{StaticResource CardPanel}" Margin="0,0,0,12">
+        <StackPanel>
+          <TextBlock Text="已装软件（只读列表）" Style="{StaticResource SectionText}"/>
+          <TextBlock Style="{StaticResource MutedText}" TextWrapping="Wrap"
+                     Text="查看已安装软件与占用，便于自行决定卸载哪些。本工具不提供自动卸载（卸载请使用系统「应用和功能」或软件自带卸载程序）。"/>
+          <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+            <Button x:Name="BtnLoadSoft" Content="加载软件列表" Width="118" Click="BtnLoadSoft_Click"/>
+            <TextBox x:Name="TxtSoftFilter" Width="220" Margin="10,0,0,0" TextChanged="TxtSoftFilter_TextChanged"/>
+            <Button Content="打开「应用和功能」" Width="150" Margin="10,0,0,0" Click="BtnOpenApps_Click"/>
+            <TextBlock x:Name="TxtSoftInfo" VerticalAlignment="Center" Margin="12,0,0,0" Style="{StaticResource MutedText}"/>
+          </StackPanel>
+          <ListView x:Name="LvSoftware" Height="240" Margin="0,10,0,0" Style="{StaticResource TablesListView}">
+            <ListView.View>
+              <GridView>
+                <GridViewColumn Header="名称" Width="290" DisplayMemberBinding="{Binding Name}"/>
+                <GridViewColumn Header="版本" Width="100" DisplayMemberBinding="{Binding Version}"/>
+                <GridViewColumn Header="发布者" Width="180" DisplayMemberBinding="{Binding Publisher}"/>
+                <GridViewColumn Header="大小" Width="90" DisplayMemberBinding="{Binding SizeText}"/>
+                <GridViewColumn Header="安装日期" Width="100" DisplayMemberBinding="{Binding InstallDate}"/>
+              </GridView>
+            </ListView.View>
+          </ListView>
+        </StackPanel>
+      </Border>
+
+      <Border Style="{StaticResource CardPanel}">
+        <StackPanel>
+          <TextBlock Text="数据与规则维护" Style="{StaticResource SectionText}"/>
+          <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+            <Button Content="打开数据目录" Width="110" Click="BtnOpenDataDir_Click"/>
+            <Button Content="打开日志目录" Width="110" Margin="8,0,0,0" Click="BtnOpenLogs_Click"/>
+            <Button Content="打开规则库" Width="100" Margin="8,0,0,0" Click="BtnOpenRules_Click"/>
+            <Button x:Name="BtnReloadRules" Content="重载规则库" Width="100" Margin="8,0,0,0" Click="BtnReloadRules_Click"/>
+            <Button x:Name="BtnCheckRules" Content="检查规则库" Width="100" Margin="8,0,0,0" Click="BtnCheckRules_Click"/>
+          </StackPanel>
+          <TextBlock x:Name="TxtRuleCheck" Margin="0,8,0,0" TextWrapping="Wrap" FontSize="12" Foreground="{StaticResource Text2Brush}"/>
+
+          <Separator/>
+          <TextBlock Text="备份区位置" Style="{StaticResource SectionText}"/>
+          <TextBlock Style="{StaticResource MutedText}" TextWrapping="Wrap"
+                     Text="默认位于用户数据目录。可改为其他磁盘（跨盘恢复/清空会稍慢）。修改后新的备份会存到新位置，旧备份仍留在原目录。"/>
+          <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+            <TextBox x:Name="TxtBackupRoot" Width="420"/>
+            <Button Content="浏览…" Width="70" Margin="8,0,0,0" Click="BtnBrowseBackup_Click"/>
+            <Button x:Name="BtnSaveBackup" Content="保存设置" Width="90" Margin="8,0,0,0" Style="{StaticResource PrimaryButton}" Click="BtnSaveBackup_Click"/>
+          </StackPanel>
+
+          <Separator/>
+          <TextBlock Text="清理规则在线更新" Style="{StaticResource SectionText}"/>
+          <TextBlock Style="{StaticResource MutedText}" TextWrapping="Wrap"
+                     Text="从可信来源下载最新清理规则（仅下载，不上传任何数据；断网不影响本机清理与已下载规则）。应用前会展示差异并备份旧版，可随时回退。"/>
+          <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+            <TextBox x:Name="TxtRuleUrl" Width="380" ToolTip="支持 https:// 地址或本地文件路径"/>
+            <Button x:Name="BtnRuleCheck" Content="检查更新" Width="90" Margin="8,0,0,0" Click="BtnRuleCheck_Click"/>
+            <Button x:Name="BtnRuleApply" Content="应用更新…" Width="98" Margin="8,0,0,0" IsEnabled="False" Click="BtnRuleApply_Click"/>
+            <Button x:Name="BtnRuleImport" Content="从本地文件导入…" Width="130" Margin="8,0,0,0" Click="BtnRuleImport_Click"/>
+          </StackPanel>
+          <TextBlock x:Name="TxtRuleUpdate" Margin="0,8,0,0" TextWrapping="Wrap" FontSize="12" Foreground="{StaticResource Text2Brush}"/>
+        </StackPanel>
+      </Border>
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>

@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>清理台账 - C盘清理助手</title>
+<style>
+:root { --ink:#16202b; --muted:#5b6673; --line:#dfe3e8; --bg:#fbfbfa; --card:#ffffff; --accent:#0b57d0; --ok:#1a7f37; --warn:#b54708; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--ink); font:14px/1.6 "Segoe UI","Microsoft YaHei UI","PingFang SC",system-ui,sans-serif; }
+.wrap { max-width:1080px; margin:0 auto; padding:32px 20px 64px; }
+h1 { font-size:24px; margin:0 0 4px; letter-spacing:.01em; }
+.sub { color:var(--muted); font-size:13px; margin-bottom:24px; }
+.metrics { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px; margin:18px 0 26px; }
+.metric { background:var(--card); border:1px solid var(--line); padding:14px 16px; }
+.metric .k { font-size:12px; color:var(--muted); }
+.metric .v { font-size:20px; font-weight:600; margin-top:2px; font-variant-numeric:tabular-nums; }
+table { width:100%; border-collapse:collapse; background:var(--card); border:1px solid var(--line); }
+th,td { padding:8px 10px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; font-size:13px; }
+th { background:#f3f4f2; font-weight:600; white-space:nowrap; }
+td.num, th.num { text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; }
+tr:last-child td { border-bottom:none; }
+details { margin:10px 0 22px; }
+summary { cursor:pointer; color:var(--accent); font-weight:600; font-size:13px; }
+.tag { display:inline-block; padding:1px 7px; border:1px solid var(--line); border-radius:999px; font-size:12px; color:var(--muted); background:#fff; }
+.tag.ok { color:var(--ok); border-color:#bfd8c5; }
+.tag.warn { color:var(--warn); border-color:#ecd9b8; }
+.foot { margin-top:28px; color:var(--muted); font-size:12px; }
+h2 { font-size:16px; margin:28px 0 10px; }</style>
+</head>
+<body>
+<div class="wrap">
+<h1>清理台账</h1>
+<div class="sub">C盘清理助手 v5.0.0 · 生成时间 2026-09-16 17:43:59 · 共 4 条记录</div>
+<div class="metrics">
+<div class="metric"><div class="k">累计实际释放</div><div class="v">3.6 MB</div></div>
+<div class="metric"><div class="k">清理文件数</div><div class="v">11 个</div></div>
+<div class="metric"><div class="k">备份区收容（累计）</div><div class="v">7.0 MB</div></div>
+<div class="metric"><div class="k">移至回收站（累计）</div><div class="v">0 B</div></div>
+</div>
+<h2>记录列表</h2>
+<table>
+<thead><tr><th>时间</th><th>类型</th><th>模式</th><th class="num">文件数</th><th class="num">实际释放</th><th class="num">备份区</th><th class="num">回收站</th><th class="num">跳过</th><th>状态</th></tr></thead>
+<tbody>
+<tr><td>2026-09-16 17:43</td><td>清空备份区</td><td>purgeAll</td><td class="num">0</td><td class="num">3.6 MB</td><td class="num">0 B</td><td class="num">0 B</td><td class="num">0</td><td><span class="tag ok">成功</span></td></tr>
+<tr><td>2026-09-16 17:43</td><td>清理</td><td>allToBackup</td><td class="num">6</td><td class="num">0 B</td><td class="num">3.6 MB</td><td class="num">0 B</td><td class="num">0</td><td><span class="tag ok">成功</span></td></tr>
+<tr><td>2026-09-16 17:43</td><td>恢复</td><td>restore</td><td class="num">0</td><td class="num">0 B</td><td class="num">0 B</td><td class="num">0 B</td><td class="num">0</td><td><span class="tag ok">成功</span></td></tr>
+<tr><td>2026-09-16 17:43</td><td>清理</td><td>allToBackup</td><td class="num">5</td><td class="num">0 B</td><td class="num">3.4 MB</td><td class="num">0 B</td><td class="num">1</td><td><span class="tag ok">成功</span></td></tr>
+</tbody>
+</table>
+<details>
+<summary>2026-09-16 17:43 · 清理 明细（1 个类别）</summary>
+<table>
+<thead><tr><th>类别</th><th>策略</th><th class="num">文件数</th><th class="num">大小</th><th class="num">跳过</th></tr></thead>
+<tbody>
+<tr><td>用户临时文件</td><td>backup</td><td class="num">6</td><td class="num">3.6 MB</td><td class="num">0</td></tr>
+</tbody>
+</table>
+</details>
+<details>
+<summary>2026-09-16 17:43 · 清理 明细（1 个类别）</summary>
+<table>
+<thead><tr><th>类别</th><th>策略</th><th class="num">文件数</th><th class="num">大小</th><th class="num">跳过</th></tr></thead>
+<tbody>
+<tr><td>用户临时文件</td><td>backup</td><td class="num">5</td><td class="num">3.4 MB</td><td class="num">1</td></tr>
+</tbody>
+</table>
+</details>
+<div class="foot">本报告由 C盘清理助手 本地生成，不包含任何上传行为。数据文件：%LOCALAPPDATA%\C盘清理助手\ledger\ledger.jsonl</div>
+</div>
+</body>
+</html>

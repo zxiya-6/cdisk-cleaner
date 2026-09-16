@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>C盘清理助手 v5.0 · 使用说明</title>
+<style>
+:root{
+ --bg:#fafaf9;--surface:#ffffff;--ink:#1c1c1b;--ink2:#55554f;--ink3:#8a8a83;
+ --rule:#e4e4df;--rule2:#d4d4cd;--accent:#0b57d0;--ok:#1a7f37;--warn:#9a5b00;--danger:#b3261e;
+ --mono:"Cascadia Mono","Consolas",monospace;
+ --sans:"Segoe UI","Microsoft YaHei UI","PingFang SC",sans-serif;
+ --nav:clamp(200px,17vw,250px);--canvas:clamp(960px,94vw,1180px);--measure:68ch;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.65 var(--sans)}
+.layout{display:grid;grid-template-columns:var(--nav) minmax(0,1fr);min-height:100vh}
+aside{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;border-right:1px solid var(--rule);padding:28px 20px;background:var(--surface)}
+aside .brand{font-weight:600;font-size:14px}
+aside .brand small{display:block;color:var(--ink3);font-weight:400;font-size:11.5px;margin-top:2px}
+aside nav{margin-top:22px}
+aside nav a{display:block;color:var(--ink2);text-decoration:none;font-size:12.5px;padding:5px 0 5px 10px;border-left:2px solid transparent;border-bottom:none}
+aside nav a:hover{color:var(--accent)}
+aside nav a .n{font-family:var(--mono);font-size:11px;color:var(--ink3);margin-right:8px}
+main{padding:40px clamp(20px,3vw,48px) 96px}
+.canvas{max-width:var(--canvas);margin-inline:auto}
+.cover{border-bottom:1px solid var(--rule2);padding-bottom:34px;margin-bottom:36px}
+.cover .kicker{font-family:var(--mono);font-size:12px;color:var(--accent);letter-spacing:.08em;text-transform:uppercase}
+h1{font-size:34px;line-height:1.15;margin:10px 0 8px;letter-spacing:-0.01em;font-weight:600}
+.cover .lede{color:var(--ink2);font-size:15.5px;max-width:var(--measure)}
+.cover .meta{margin-top:18px;font-family:var(--mono);font-size:12px;color:var(--ink3);display:flex;gap:22px;flex-wrap:wrap}
+section{margin:0 0 46px}
+.folio{display:flex;align-items:baseline;gap:12px;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:16px}
+.folio .no{font-family:var(--mono);font-size:12.5px;color:var(--accent)}
+.folio h2{font-size:20px;font-weight:600;margin:0}
+.prose{max-width:var(--measure)}
+.prose p{margin:0 0 14px}
+p{margin:0 0 14px}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(11,87,208,.25)}
+a:hover{border-bottom-color:var(--accent)}
+code{font-family:var(--mono);font-size:.88em;background:#f1f1ee;border:1px solid var(--rule);border-radius:3px;padding:1px 5px}
+table{width:100%;border-collapse:collapse;margin:14px 0 20px;background:var(--surface);font-size:13px}
+th,td{text-align:left;padding:8px 10px;border:1px solid var(--rule);vertical-align:top}
+th{background:#f4f4f1;font-weight:600;font-size:12.5px;white-space:nowrap}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--mono);font-size:12.5px;white-space:nowrap}
+ul,ol{margin:0 0 14px;padding-left:22px}
+li{margin:4px 0}
+.small{font-size:12.5px;color:var(--ink2)}
+.mut{color:var(--ink3)}
+.tag{display:inline-block;font-size:11.5px;font-family:var(--mono);border:1px solid var(--rule2);border-radius:3px;padding:0 6px;color:var(--ink2);background:var(--surface);white-space:nowrap}
+.tag.ok{color:var(--ok);border-color:#bfd8c5}
+.tag.warn{color:var(--warn);border-color:#e7d7b4}
+.tag.no{color:var(--danger);border-color:#eac3c0}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:1px}
+.dot.ok{background:var(--ok)}.dot.warn{background:var(--warn)}.dot.no{background:var(--danger)}
+figure{margin:18px 0}
+figure img{max-width:100%;border:1px solid var(--rule2);display:block}
+figcaption{font-size:12px;color:var(--ink3);margin-top:6px}
+hr{border:none;border-top:1px solid var(--rule);margin:34px 0}
+footer{border-top:1px solid var(--rule2);margin-top:40px;padding-top:14px;font-size:12px;color:var(--ink3);font-family:var(--mono)}
+@media (max-width:980px){.layout{grid-template-columns:1fr}aside{display:none}}
+@media print{aside{display:none}.layout{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="layout">
+
+<aside>
+  <div class="brand">C盘清理助手 v5.0<small>使用说明</small></div>
+  <nav>
+    <a href="#s1"><span class="n">01</span>30 秒上手</a>
+    <a href="#s2"><span class="n">02</span>界面导览</a>
+    <a href="#s3"><span class="n">03</span>扫描与预览</a>
+    <a href="#s4"><span class="n">04</span>清理方式与确认</a>
+    <a href="#s5"><span class="n">05</span>结果、恢复与备份区</a>
+    <a href="#s6"><span class="n">06</span>历史台账</a>
+    <a href="#s7"><span class="n">07</span>工具页</a>
+    <a href="#s8"><span class="n">08</span>规则在线更新</a>
+    <a href="#s9"><span class="n">09</span>常见问题</a>
+    <a href="#s10"><span class="n">10</span>安全边界</a>
+  </nav>
+</aside>
+
+<main>
+<div class="canvas">
+
+  <header class="cover">
+    <div class="kicker">User Guide</div>
+    <h1>C盘清理助手 v5.0 使用说明</h1>
+    <p class="lede">免安装、无需联网、数据不出本机。双击 <code>C盘清理助手.exe</code> 即可使用；建议以管理员身份运行以覆盖系统级缓存。</p>
+    <div class="meta"><span>Windows 10 / 11 · x64</span><span>版本 v5.0.0</span><span>2026-09-16</span></div>
+  </header>
+
+  <section id="s1">
+    <div class="folio"><span class="no">01</span><h2>30 秒上手</h2></div>
+    <ol class="prose">
+      <li>双击运行 <code>C盘清理助手.exe</code>（建议右键"以管理员身份运行"）。</li>
+      <li>点「<strong>扫描可清理项</strong>」，等待约 2 秒，列表显示每个类别的文件数与可释放大小。</li>
+      <li>核对勾选（默认只勾"安全"级）→ 点「<strong>清理选中项…</strong>」→ 在确认对话框核对数量与风险 → 点「开始清理」。</li>
+    </ol>
+    <div class="prose">
+      <p>清理完成后会弹出报告：释放了多少空间、多少进了备份区、多少被跳过；每次操作都会写入历史台账。</p>
+    </div>
+    <figure>
+      <img src="screenshots/ui-02-after-scan.png" alt="扫描完成后的主界面">
+      <figcaption>扫描完成：31 个类别按大小排列，安全项默认勾选，右侧为详情面板</figcaption>
+    </figure>
+  </section>
+
+  <section id="s2">
+    <div class="folio"><span class="no">02</span><h2>界面导览</h2></div>
+    <table>
+      <tr><th style="width:150px">页签</th><th>用途</th></tr>
+      <tr><td>清理</td><td>主流程：扫描 → 预览 → 勾选 → 清理</td></tr>
+      <tr><td>大文件</td><td>找出占空间的大文件（默认 ≥100 MB），可定位、可移入回收站</td></tr>
+      <tr><td>备份与恢复</td><td>查看备份区、恢复文件、清空备份区（清空后空间才真正释放）</td></tr>
+      <tr><td>历史台账</td><td>每次清理/恢复的记录，支持 CSV / HTML 导出</td></tr>
+      <tr><td>工具</td><td>系统还原点、DISM 组件清理、已装软件列表、规则在线更新、设置</td></tr>
+    </table>
+  </section>
+
+  <section id="s3">
+    <div class="folio"><span class="no">03</span><h2>扫描与预览</h2></div>
+    <div class="prose">
+      <p>扫描<strong>不改动任何文件</strong>；列表展示每个类别的文件数与大小。风险分级用色点标识：</p>
+    </div>
+    <ul class="prose">
+      <li><span class="dot ok"></span><strong>安全</strong>：可自动重建的缓存/临时文件，默认勾选；</li>
+      <li><span class="dot warn"></span><strong>谨慎</strong>：删除后影响部分体验（如浏览历史、IDE 索引），默认不勾选；</li>
+      <li><span class="dot no"></span><strong>高风险</strong>：不可逆操作（如清空回收站），默认不勾选，执行前需额外确认。</li>
+    </ul>
+    <div class="prose">
+      <p>点击任一类别，右侧显示<strong>文件明细（Top 1000）</strong>；取消勾选可<strong>逐个排除</strong>不想删的文件。被占用的文件、无权限的目录会自动跳过并记录原因。</p>
+    </div>
+  </section>
+
+  <section id="s4">
+    <div class="folio"><span class="no">04</span><h2>清理方式与确认</h2></div>
+    <table>
+      <tr><th style="width:170px">方式</th><th>说明</th></tr>
+      <tr><td>标准清理（推荐）</td><td>按类别安全策略执行：缓存类永久删除；历史/下载等移至回收站或备份区</td></tr>
+      <tr><td>全部先备份</td><td>所有文件先移入备份区（最稳妥、可恢复）；清空备份区后才释放空间</td></tr>
+      <tr><td>全部永久删除</td><td>立即释放空间、不可恢复（需自行确认）</td></tr>
+    </table>
+    <div class="prose">
+      <p>确认对话框内可核对：每个类别的文件数、大小、风险与策略；勾选"清理前创建系统还原点"可为系统级回滚加一道保险（不可用时自动跳过并说明）。</p>
+    </div>
+    <figure>
+      <img src="screenshots/ui-04-confirm-dialog.png" alt="清理确认对话框">
+      <figcaption>清理确认对话框：预览数量与大小、风险提示、清理方式与还原点选项</figcaption>
+    </figure>
+  </section>
+
+  <section id="s5">
+    <div class="folio"><span class="no">05</span><h2>结果、恢复与备份区</h2></div>
+    <ul class="prose">
+      <li>清理完成后弹出报告：永久删除 / 备份区 / 回收站 / 跳过 的数量与空间，以及 C 盘可用空间前后变化。</li>
+      <li><strong>恢复</strong>：进入「备份与恢复」→ 勾选会话 → 「恢复选中会话…」；同名冲突可选"保留两者（改名恢复）/ 跳过 / 覆盖"。</li>
+      <li><strong>释放空间</strong>：备份区文件在"清空备份区"之前仍占用磁盘；确认无需恢复后清空即可释放。</li>
+    </ul>
+    <figure>
+      <img src="screenshots/ui-07-backup.png" alt="备份与恢复页">
+      <figcaption>备份与恢复：会话列表、剩余文件与恢复/清空入口</figcaption>
+    </figure>
+  </section>
+
+  <section id="s6">
+    <div class="folio"><span class="no">06</span><h2>历史台账</h2></div>
+    <div class="prose">
+      <p>每次清理/恢复/清空都会记录：时间、类别、文件数、释放空间、跳过与异常信息；支持导出会话 CSV、类别明细 CSV 与 HTML 报告（双击直接打开）。记录保存在本地，应用重启不丢失。</p>
+    </div>
+  </section>
+
+  <section id="s7">
+    <div class="folio"><span class="no">07</span><h2>工具页</h2></div>
+    <ul class="prose">
+      <li><strong>系统还原点</strong>：一键创建（有频率限制时自动跳过并提示）。</li>
+      <li><strong>DISM 组件存储维护</strong>：先"分析"查看可回收量（只读），再决定是否"清理"（5–15 分钟，请勿中途关闭）。</li>
+      <li><strong>已装软件</strong>：只读列表便于排查占用；卸载请用系统"应用和功能"。</li>
+      <li><strong>规则在线更新</strong>：见第 08 节；<strong>设置</strong>：备份区位置可改到其他磁盘。</li>
+    </ul>
+    <figure>
+      <img src="screenshots/ui-09-tools.png" alt="工具页">
+      <figcaption>工具页：系统还原点、DISM 维护、已装软件、规则更新与设置</figcaption>
+    </figure>
+  </section>
+
+  <section id="s8">
+    <div class="folio"><span class="no">08</span><h2>规则在线更新</h2></div>
+    <ul class="prose">
+      <li>在「工具」页填入可信更新地址（https://… 或本地文件路径）→「检查更新」（显示差异）→「应用更新」。</li>
+      <li>更新<strong>只下载、不上传</strong>任何本机数据；应用前自动备份旧版（保留最近 5 份，可回退）；断网不影响清理。</li>
+      <li>也支持「从本地文件导入」离线更新。</li>
+    </ul>
+  </section>
+
+  <section id="s9">
+    <div class="folio"><span class="no">09</span><h2>常见问题</h2></div>
+    <table>
+      <tr><th style="width:250px">问题</th><th>处理方式</th></tr>
+      <tr><td>提示"需要管理员"或部分项目被跳过</td><td>系统级缓存需管理员权限；关闭后右键"以管理员身份运行"即可。普通用户模式下其余功能不受影响，被跳过项会注明原因。</td></tr>
+      <tr><td>文件显示"被占用"没删掉</td><td>文件正被程序使用（如浏览器）。关闭对应程序后重扫重清即可。</td></tr>
+      <tr><td>清理后空间没有增加</td><td>备份模式 / 回收站的文件要等"清空备份区 / 回收站"后才释放；标准模式的永久删除类别会立即释放。</td></tr>
+      <tr><td>还原点没创建成功</td><td>系统还原未启用或 24 小时内已创建过，属正常节流，不影响清理。</td></tr>
+      <tr><td>数据都在哪？</td><td><code>%LOCALAPPDATA%\C盘清理助手\</code>（配置、日志、台账、备份区）。不上传任何数据。</td></tr>
+      <tr><td>想放到 U 盘随身带？</td><td>程序目录新建空文件 <code>portable.flag</code>，数据改存程序目录 <code>data\</code>。</td></tr>
+      <tr><td>如何卸载？</td><td>删除程序文件夹即可（免安装）；连同 <code>%LOCALAPPDATA%\C盘清理助手\</code> 一起删除即彻底清理。</td></tr>
+    </table>
+  </section>
+
+  <section id="s10">
+    <div class="folio"><span class="no">10</span><h2>安全边界（不会碰什么）</h2></div>
+    <ul class="prose">
+      <li>不触碰系统关键区域（System32、WinSxS、驱动、启动相关）与个人文档 / 桌面 / 图片 / 视频 / 音乐 / 密钥目录；</li>
+      <li>不做注册表清理、驱动 / 服务调优；</li>
+      <li>所有删除动作均经过"预览 → 确认 → 台账"，并在执行期由安全保护名单逐文件复核。</li>
+    </ul>
+  </section>
+
+  <footer>C盘清理助手 v5.0 · 使用说明 · 2026-09-16</footer>
+</div>
+</main>
+</div>
+</body>
+</html>

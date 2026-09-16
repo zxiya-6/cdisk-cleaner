@@ -1,0 +1,81 @@
+﻿{
+    "raw":  {
+                "v5Gui":  [
+                              {
+                                  "run":  1,
+                                  "readyMs":  1090,
+                                  "workingSetMB":  120.5
+                              },
+                              {
+                                  "run":  2,
+                                  "readyMs":  1105,
+                                  "workingSetMB":  117.7
+                              },
+                              {
+                                  "run":  3,
+                                  "readyMs":  1114,
+                                  "workingSetMB":  112.4
+                              }
+                          ],
+                "v5Cli":  [
+                              {
+                                  "run":  1,
+                                  "wallClockSec":  2.12,
+                                  "selfReportedSec":  "1.59",
+                                  "peakMemoryMB":  67,
+                                  "files":  "91,769"
+                              },
+                              {
+                                  "run":  2,
+                                  "wallClockSec":  2.19,
+                                  "selfReportedSec":  "1.64",
+                                  "peakMemoryMB":  72.8,
+                                  "files":  "91,769"
+                              },
+                              {
+                                  "run":  3,
+                                  "wallClockSec":  2.21,
+                                  "selfReportedSec":  "1.73",
+                                  "peakMemoryMB":  68.6,
+                                  "files":  "91,769"
+                              }
+                          ],
+                "legacyGui":  [
+                                  {
+                                      "run":  1,
+                                      "readyMs":  4008,
+                                      "workingSetMB":  194.2
+                                  },
+                                  {
+                                      "run":  2,
+                                      "readyMs":  3610,
+                                      "workingSetMB":  192.9
+                                  },
+                                  {
+                                      "run":  3,
+                                      "readyMs":  3577,
+                                      "workingSetMB":  166.7
+                                  }
+                              ],
+                "legacyScan":  [
+                                   {
+                                       "run":  1,
+                                       "elapsedSec":  17.13,
+                                       "peakMemoryMB":  98.1
+                                   },
+                                   {
+                                       "run":  2,
+                                       "elapsedSec":  14.59,
+                                       "peakMemoryMB":  131.2
+                                   }
+                               ]
+            },
+    "summary":  {
+                    "v5_gui_ready_ms_median":  1105,
+                    "legacy_gui_ready_ms_median":  3610,
+                    "v5_scan_wall_median":  2.19,
+                    "v5_scan_peak_mb_median":  68.6,
+                    "legacy_scan_median":  15.86,
+                    "legacy_scan_peak_mb_median":  114.65
+                }
+}

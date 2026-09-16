@@ -1,0 +1,45 @@
+﻿{
+    "cliScan":  [
+                    {
+                        "run":  1,
+                        "wallClockSec":  2.26,
+                        "selfReportedSec":  "1.69",
+                        "peakMemoryMB":  69.6,
+                        "files":  "91,723"
+                    },
+                    {
+                        "run":  2,
+                        "wallClockSec":  2.17,
+                        "selfReportedSec":  "1.65",
+                        "peakMemoryMB":  69.6,
+                        "files":  "91,738"
+                    },
+                    {
+                        "run":  3,
+                        "wallClockSec":  2.17,
+                        "selfReportedSec":  "1.62",
+                        "peakMemoryMB":  70,
+                        "files":  "91,739"
+                    }
+                ],
+    "guiStart":  [
+                     {
+                         "run":  1,
+                         "readyMs":  1107,
+                         "processAliveMs":  1336,
+                         "workingSetMBatReady":  100.5
+                     },
+                     {
+                         "run":  2,
+                         "readyMs":  959,
+                         "processAliveMs":  1003,
+                         "workingSetMBatReady":  80.6
+                     },
+                     {
+                         "run":  3,
+                         "readyMs":  966,
+                         "processAliveMs":  1008,
+                         "workingSetMBatReady":  80.9
+                     }
+                 ]
+}

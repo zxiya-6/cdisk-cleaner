@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>C盘清理助手 v5.0 · 维护与交接手册</title>
+<style>
+:root{
+ --bg:#fafaf9;--surface:#ffffff;--ink:#1c1c1b;--ink2:#55554f;--ink3:#8a8a83;
+ --rule:#e4e4df;--rule2:#d4d4cd;--accent:#0b57d0;--ok:#1a7f37;--warn:#9a5b00;--danger:#b3261e;
+ --mono:"Cascadia Mono","Consolas",monospace;
+ --sans:"Segoe UI","Microsoft YaHei UI","PingFang SC",sans-serif;
+ --nav:clamp(200px,17vw,250px);--canvas:clamp(960px,94vw,1180px);--measure:68ch;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.65 var(--sans)}
+.layout{display:grid;grid-template-columns:var(--nav) minmax(0,1fr);min-height:100vh}
+aside{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;border-right:1px solid var(--rule);padding:28px 20px;background:var(--surface)}
+aside .brand{font-weight:600;font-size:14px}
+aside .brand small{display:block;color:var(--ink3);font-weight:400;font-size:11.5px;margin-top:2px}
+aside nav{margin-top:22px}
+aside nav a{display:block;color:var(--ink2);text-decoration:none;font-size:12.5px;padding:5px 0 5px 10px;border-left:2px solid transparent;border-bottom:none}
+aside nav a:hover{color:var(--accent)}
+aside nav a .n{font-family:var(--mono);font-size:11px;color:var(--ink3);margin-right:8px}
+main{padding:40px clamp(20px,3vw,48px) 96px}
+.canvas{max-width:var(--canvas);margin-inline:auto}
+.cover{border-bottom:1px solid var(--rule2);padding-bottom:34px;margin-bottom:36px}
+.cover .kicker{font-family:var(--mono);font-size:12px;color:var(--accent);letter-spacing:.08em;text-transform:uppercase}
+h1{font-size:34px;line-height:1.15;margin:10px 0 8px;letter-spacing:-0.01em;font-weight:600}
+.cover .lede{color:var(--ink2);font-size:15.5px;max-width:var(--measure)}
+.cover .meta{margin-top:18px;font-family:var(--mono);font-size:12px;color:var(--ink3);display:flex;gap:22px;flex-wrap:wrap}
+section{margin:0 0 46px}
+.folio{display:flex;align-items:baseline;gap:12px;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:16px}
+.folio .no{font-family:var(--mono);font-size:12.5px;color:var(--accent)}
+.folio h2{font-size:20px;font-weight:600;margin:0}
+.prose{max-width:var(--measure)}
+.prose p{margin:0 0 14px}
+p{margin:0 0 14px}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(11,87,208,.25)}
+a:hover{border-bottom-color:var(--accent)}
+code{font-family:var(--mono);font-size:.88em;background:#f1f1ee;border:1px solid var(--rule);border-radius:3px;padding:1px 5px}
+pre{font-family:var(--mono);font-size:12.5px;line-height:1.6;background:var(--surface);border:1px solid var(--rule);padding:14px 16px;overflow-x:auto;color:var(--ink)}
+pre code{background:none;border:none;padding:0}
+table{width:100%;border-collapse:collapse;margin:14px 0 20px;background:var(--surface);font-size:13px}
+th,td{text-align:left;padding:8px 10px;border:1px solid var(--rule);vertical-align:top}
+th{background:#f4f4f1;font-weight:600;font-size:12.5px;white-space:nowrap}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--mono);font-size:12.5px;white-space:nowrap}
+ul,ol{margin:0 0 14px;padding-left:22px}
+li{margin:4px 0}
+.small{font-size:12.5px;color:var(--ink2)}
+.mut{color:var(--ink3)}
+.tag{display:inline-block;font-size:11.5px;font-family:var(--mono);border:1px solid var(--rule2);border-radius:3px;padding:0 6px;color:var(--ink2);background:var(--surface);white-space:nowrap}
+.tag.ok{color:var(--ok);border-color:#bfd8c5}
+hr{border:none;border-top:1px solid var(--rule);margin:34px 0}
+footer{border-top:1px solid var(--rule2);margin-top:40px;padding-top:14px;font-size:12px;color:var(--ink3);font-family:var(--mono)}
+@media (max-width:980px){.layout{grid-template-columns:1fr}aside{display:none}}
+@media print{aside{display:none}.layout{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="layout">
+
+<aside>
+  <div class="brand">C盘清理助手 v5.0<small>维护与交接手册</small></div>
+  <nav>
+    <a href="#s1"><span class="n">01</span>架构总览</a>
+    <a href="#s2"><span class="n">02</span>交付目录结构</a>
+    <a href="#s3"><span class="n">03</span>构建与发布</a>
+    <a href="#s4"><span class="n">04</span>规则库维护</a>
+    <a href="#s5"><span class="n">05</span>规则在线更新机制</a>
+    <a href="#s6"><span class="n">06</span>数据文件</a>
+    <a href="#s7"><span class="n">07</span>日志与排障</a>
+    <a href="#s8"><span class="n">08</span>测试体系</a>
+    <a href="#s9"><span class="n">09</span>安全设计（五层）</a>
+    <a href="#s10"><span class="n">10</span>交接检查清单</a>
+  </nav>
+</aside>
+
+<main>
+<div class="canvas">
+
+  <header class="cover">
+    <div class="kicker">Maintenance &amp; Handover</div>
+    <h1>维护与交接手册</h1>
+    <p class="lede">给接手人：30 分钟了解架构、规则库、数据位置与复测方式；按第 10 节清单逐项确认即可独立接手。</p>
+    <div class="meta"><span>v5.0.0 · 2026-09-16</span><span>适用：Windows 10 / 11 x64</span></div>
+  </header>
+
+  <section id="s1">
+    <div class="folio"><span class="no">01</span><h2>架构总览</h2></div>
+<pre><code>rules.json ──► Scanner（并行扫描 / 进度 / 取消）
+                  │
+                  ▼
+           预览与勾选（GUI / CLI）
+                  │
+                  ▼
+         CleanExecutor ──逐文件──► SafetyFilter（安全名单，执行期强制复核）
+                  │
+        ┌─────────┼──────────┐
+        ▼         ▼          ▼
+     永久删除   备份区     回收站
+                  │
+                  ▼
+             Ledger（JSONL 台账）──► CSV / HTML 导出</code></pre>
+    <table>
+      <tr><th style="width:190px">工程</th><th style="width:230px">路径</th><th>职责</th></tr>
+      <tr><td>CleanMaster.Core</td><td><code>src\CleanMaster.Core</code></td><td>引擎：规则库、安全过滤器、扫描器、清理执行器、备份区、台账、自检</td></tr>
+      <tr><td>CleanMaster.Cli</td><td><code>src\CleanMaster.Cli</code></td><td>命令行：scan / clean / backup / ledger / rules-update / selftest</td></tr>
+      <tr><td>CleanMaster.App</td><td><code>src\CleanMaster.App</code></td><td>WPF 桌面界面（五页签），零装饰高信息密度风格</td></tr>
+    </table>
+    <ul class="prose">
+      <li>扫描与清理共用同一套路径解析/过滤逻辑，保证"预览到的"与"会处理的"一致；</li>
+      <li>执行期安全名单独立于规则库：规则被改坏也不会误删系统关键区与个人目录；</li>
+      <li>备份移入为同卷改名（秒级）；跨卷自动复制 + 校验 + 删源。</li>
+    </ul>
+  </section>
+
+  <section id="s2">
+    <div class="folio"><span class="no">02</span><h2>交付目录结构</h2></div>
+<pre><code>C盘清理助手 v5.0\
+├─ C盘清理助手.exe          ← 主程序（自包含，双击即用）
+├─ rules\                   ← 程序自带规则库（rules.json / protected.json）
+├─ tools\CleanMasterCli.exe  ← 命令行版（含自己的 rules\）
+├─ Source\                  ← 完整源码（src\ + rules\ + CleanMaster.sln）
+├─ Docs\                    ← 五份文档（HTML + Markdown）+ data\ + screenshots\
+└─ Tests\                   ← 验收与维护脚本（自检 / 端到端 / 界面 / 基准 / 规则更新）</code></pre>
+  </section>
+
+  <section id="s3">
+    <div class="folio"><span class="no">03</span><h2>构建与发布</h2></div>
+    <p>环境要求：Windows 10 / 11 x64、.NET SDK 7.0+（开发机实测 SDK 7.0.100 可用）。</p>
+<pre><code># 构建（三个工程）
+dotnet build CleanMaster.sln -c Release
+
+# 发布自包含版（目标机无需安装 .NET）
+dotnet publish src\CleanMaster.App -c Release -r win-x64 --self-contained true -p:PublishReadyToRun=true -o publish\app
+dotnet publish src\CleanMaster.Cli -c Release -r win-x64 --self-contained true -p:PublishReadyToRun=true -o publish\cli</code></pre>
+    <ul class="prose">
+      <li>本机若存在多个 .NET 安装，运行<strong>框架依赖版</strong>需让 <code>DOTNET_ROOT</code> 指向含 net7 桌面运行时的安装；<strong>发布版自包含，不受影响</strong>；</li>
+      <li>源码文件统一 UTF-8（带 BOM）；PowerShell 维护脚本同样需要 BOM（否则中文路径被按 GBK 误读）；</li>
+      <li>解决方案文件为手写版本；不要依赖 <code>dotnet new</code>（部分环境被安全策略限制）。</li>
+    </ul>
+  </section>
+
+  <section id="s4">
+    <div class="folio"><span class="no">04</span><h2>规则库维护（核心资产）</h2></div>
+    <p>生效优先级：<code>%LOCALAPPDATA%\C盘清理助手\rules\rules.json</code>（用户副本，在线更新/导入生成）&gt; 程序目录 <code>rules\rules.json</code>（出厂版本）。</p>
+    <table>
+      <tr><th style="width:230px">字段</th><th>含义</th><th style="width:230px">取值</th></tr>
+      <tr><td>id / group / name / note</td><td>标识 / 分组 / 名称 / 说明</td><td>文本</td></tr>
+      <tr><td>kind</td><td>规则类型</td><td>dirContents / files / emptyRecycleBin</td></tr>
+      <tr><td>paths</td><td>目标路径（支持 %ENV% 与通配段）</td><td>字符串数组</td></tr>
+      <tr><td>includeFiles / excludeFiles</td><td>文件名过滤（通配符）</td><td>字符串数组</td></tr>
+      <tr><td>strategy</td><td>清理策略</td><td>delete / backup / trash</td></tr>
+      <tr><td>risk</td><td>风险等级</td><td>safe / moderate / high</td></tr>
+      <tr><td>defaultChecked / recommend</td><td>默认勾选 / 进入一键推荐</td><td>true / false</td></tr>
+      <tr><td>requiresAdmin</td><td>是否需要管理员</td><td>true / false</td></tr>
+      <tr><td>minAgeDays</td><td>只清理 N 天前文件（0 不限）</td><td>整数</td></tr>
+      <tr><td>warnProcesses</td><td>进程运行时提示</td><td>字符串数组（无 .exe 后缀）</td></tr>
+    </table>
+    <p>维护流程：改 <code>rules.json</code> → <code>CleanMasterCli rules-check</code> 校验 → 客户端点「工具 → 重载规则库」。新增类别示例：</p>
+<pre><code>{
+  "id": "my-cache", "group": "应用与开发工具", "name": "我的工具缓存",
+  "note": "缓存目录，可安全删除", "kind": "dirContents",
+  "paths": ["%LOCALAPPDATA%\\MyTool\\cache"],
+  "strategy": "delete", "risk": "safe", "defaultChecked": false
+}</code></pre>
+    <p>自定义保护：<code>protected.json</code> 的 <code>customDeny</code> 数组追加目录（位于其下的内容永不清理）。<strong>执行期内置保护不可通过配置关闭。</strong></p>
+  </section>
+
+  <section id="s5">
+    <div class="folio"><span class="no">05</span><h2>规则在线更新机制</h2></div>
+    <p>流程：<code>下载 → 解析 → 结构校验 → 安全预检 → 差异预览 → 确认 → 备份旧版 → 写入用户副本 → 复核（失败自动回滚）</code>。</p>
+    <ul class="prose">
+      <li>命令：<code>CleanMasterCli rules-update --url &lt;URL|文件&gt; [--check] [--yes]</code>；GUI 在「工具」页；</li>
+      <li>备份：<code>rules.json.bak-yyyyMMddHHmmss</code>（保留最近 5 份）+ 首次生成 <code>rules.original.json</code> 出厂快照；</li>
+      <li>安全边界：仅下载、不上传；<strong>执行期安全名单无法被远程更新修改</strong>；非 HTTPS 且非本机地址时给出警告。</li>
+    </ul>
+  </section>
+
+  <section id="s6">
+    <div class="folio"><span class="no">06</span><h2>数据文件（%LOCALAPPDATA%\C盘清理助手\）</h2></div>
+    <table>
+      <tr><th style="width:230px">文件 / 目录</th><th>内容</th><th>备注</th></tr>
+      <tr><td>config.json</td><td>备份区路径、默认模式、规则更新地址等</td><td>删除后自动重建默认值</td></tr>
+      <tr><td>ledger\ledger.jsonl</td><td>台账（每行一次操作）</td><td>追加式、防损坏；可导出</td></tr>
+      <tr><td>logs\app-YYYYMMDD.log</td><td>运行日志</td><td>按天分文件</td></tr>
+      <tr><td>backup\&lt;会话&gt;\</td><td>备份文件（data\ + manifest.jsonl + meta.json）</td><td>清空后释放空间</td></tr>
+      <tr><td>rules\rules.json</td><td>用户规则副本（如有）</td><td>优先于出厂规则</td></tr>
+    </table>
+    <p>便携模式：程序目录放置 <code>portable.flag</code>，数据改存 <code>程序目录\data\</code>。</p>
+  </section>
+
+  <section id="s7">
+    <div class="folio"><span class="no">07</span><h2>日志与排障</h2></div>
+    <table>
+      <tr><th style="width:300px">现象</th><th>排查</th></tr>
+      <tr><td>双击无窗口（框架依赖版）</td><td>缺 .NET 桌面运行时；改用自包含发布版</td></tr>
+      <tr><td>规则库加载失败</td><td><code>rules-check</code> 看问题列表；「工具」页可重载；坏文件用 <code>.bak-*</code> 还原</td></tr>
+      <tr><td>部分文件被跳过</td><td>查看"跳过原因"：被占用（关程序重试）/ 无权限（提权）/ 位于保护名单</td></tr>
+      <tr><td>备份移入慢</td><td>备份区被配置到其他磁盘（跨卷复制）；改回同盘恢复秒级</td></tr>
+      <tr><td>DISM 报错</td><td>需管理员；退出码与输出记录在工具页文本框</td></tr>
+    </table>
+  </section>
+
+  <section id="s8">
+    <div class="folio"><span class="no">08</span><h2>测试体系（Tests\ 目录，均可一键重跑）</h2></div>
+    <table>
+      <tr><th style="width:300px">脚本 / 命令</th><th>覆盖</th><th style="width:230px">期望结果</th></tr>
+      <tr><td><code>CleanMasterCli selftest</code></td><td>安全过滤器 / 扫描精度 / 备份往返 / 长路径 / 台账 / 取消</td><td><span class="tag ok">8/8 通过（约 2 秒）</span></td></tr>
+      <tr><td><code>Tests\test-rules-update.ps1</code></td><td>规则在线更新全流程（本地 HTTP 源）</td><td><span class="tag ok">14/14 通过</span></td></tr>
+      <tr><td><code>Tests\e2e-clean-test.ps1</code></td><td>端到端：样本扫描→备份→恢复→清空→真机清理→台账导出</td><td><span class="tag ok">11/11 通过</span></td></tr>
+      <tr><td><code>Tests\uitest.ps1</code></td><td>界面交互：扫描→详情→确认框→取消→页签遍历（截图）</td><td><span class="tag ok">全部 ok，产出 ui-*.png</span></td></tr>
+      <tr><td><code>Tests\bench-final.ps1</code></td><td>性能基准：新版 vs 旧版（扫描 / 冷启动 / 内存）</td><td><span class="tag ok">产出 bench-final.json</span></td></tr>
+      <tr><td><code>CleanMasterCli rules-check</code></td><td>规则库结构校验</td><td><span class="tag ok">"校验结果：通过"</span></td></tr>
+    </table>
+  </section>
+
+  <section id="s9">
+    <div class="folio"><span class="no">09</span><h2>安全设计（五层防护）</h2></div>
+    <ol class="prose">
+      <li><strong>规则层</strong>：类别路径来自受控规则库，只指向可再生成内容；</li>
+      <li><strong>执行期</strong>：每个文件删除/移动前过 SafetyFilter（内置拒绝清单、条件白名单、符号链接拒绝、备份区自保护）；</li>
+      <li><strong>交互层</strong>：预览 → 确认对话框（风险分级 + 高风险二次确认）→ 逐项排除；</li>
+      <li><strong>可恢复层</strong>：trash / backup 策略把用户可见数据引向回收站与备份区；</li>
+      <li><strong>审计层</strong>：全量台账 + 日志 + 空间前后实测双数值。</li>
+    </ol>
+    <p class="small mut">另：规则在线更新具备独立校验与回退；安全名单不可被远程修改。</p>
+  </section>
+
+  <section id="s10">
+    <div class="folio"><span class="no">10</span><h2>交接检查清单</h2></div>
+    <ul class="prose">
+      <li>用 Source\ 目录可完整构建（<code>dotnet build CleanMaster.sln -c Release</code>）</li>
+      <li><code>selftest</code>、<code>rules-check</code> 全绿；<code>e2e-clean-test.ps1</code> 可跑通</li>
+      <li>已通读《使用说明》，了解五个页签与三种清理模式</li>
+      <li>已了解规则库字段表，能独立新增一个类别并生效</li>
+      <li>已确认数据目录位置与备份区策略（默认同盘、按会话清理）</li>
+      <li>已知悉 <code>Docs\data\</code> 的原始验收数据与 <code>Tests\</code> 的复测方式</li>
+      <li>对"不采纳项"（注册表 / 启动项 / 重复文件等）与边界达成一致（见《能力对照清单》）</li>
+    </ul>
+  </section>
+
+  <footer>C盘清理助手 v5.0 · 维护与交接手册 · 2026-09-16</footer>
+</div>
+</main>
+</div>
+</body>
+</html>

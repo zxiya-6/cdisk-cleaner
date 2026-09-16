@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>C盘清理助手 v5.0 · 文档中心</title>
+<style>
+:root{
+ --bg:#fafaf9;--surface:#ffffff;--ink:#1c1c1b;--ink2:#55554f;--ink3:#8a8a83;
+ --rule:#e4e4df;--rule2:#d4d4cd;--accent:#0b57d0;--ok:#1a7f37;
+ --mono:"Cascadia Mono","Consolas",monospace;
+ --sans:"Segoe UI","Microsoft YaHei UI","PingFang SC",sans-serif;
+ --canvas:clamp(960px,94vw,1180px);--measure:68ch;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.65 var(--sans)}
+main{padding:56px clamp(20px,3vw,48px) 96px}
+.canvas{max-width:var(--canvas);margin-inline:auto}
+.kicker{font-family:var(--mono);font-size:12px;color:var(--accent);letter-spacing:.08em;text-transform:uppercase}
+h1{font-size:36px;line-height:1.12;margin:10px 0 8px;letter-spacing:-0.01em;font-weight:600}
+.lede{color:var(--ink2);max-width:var(--measure)}
+.meta{margin:14px 0 36px;font-family:var(--mono);font-size:12px;color:var(--ink3)}
+h2{font-size:18px;font-weight:600;border-bottom:1px solid var(--rule);padding-bottom:8px;margin:40px 0 14px}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(11,87,208,.25)}
+a:hover{border-bottom-color:var(--accent)}
+ul{padding-left:22px}li{margin:6px 0}
+code{font-family:var(--mono);font-size:.88em;background:#f1f1ee;border:1px solid var(--rule);border-radius:3px;padding:1px 5px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;margin-top:12px}
+.shot{border:1px solid var(--rule2);background:var(--surface)}
+.shot img{display:block;width:100%;height:auto}
+.shot .cap{font-size:12px;color:var(--ink3);padding:8px 10px;border-top:1px solid var(--rule)}
+footer{border-top:1px solid var(--rule2);margin-top:48px;padding-top:14px;font-size:12px;color:var(--ink3);font-family:var(--mono)}
+table{width:100%;border-collapse:collapse;background:var(--surface);font-size:13px;margin:12px 0}
+th,td{text-align:left;padding:8px 10px;border:1px solid var(--rule);vertical-align:top}
+th{background:#f4f4f1;font-weight:600;font-size:12.5px;white-space:nowrap}
+</style>
+</head>
+<body>
+<main>
+<div class="canvas">
+  <div class="kicker">Docs Hub</div>
+  <h1>C盘清理助手 v5.0 · 文档中心</h1>
+  <p class="lede">免安装、离线可用、数据不出本机。程序本体是上一级的 <code>C盘清理助手.exe</code>；命令行版在 <code>tools\CleanMasterCli.exe</code>。</p>
+  <div class="meta">v5.0.0 · 2026-09-16 · Windows 10 / 11 x64</div>
+
+  <h2>五份文档</h2>
+  <table>
+    <tr><th style="width:260px">文档</th><th>内容</th></tr>
+    <tr><td><a href="使用说明.html">使用说明</a></td><td>30 秒上手、界面导览、扫描/清理/恢复/台账、常见问题、安全边界（另附 <a href="使用说明.md">Markdown 版</a>）</td></tr>
+    <tr><td><a href="维护与交接手册.html">维护与交接手册</a></td><td>架构、构建发布、规则库维护、数据文件、排障、测试体系、交接清单（另附 <a href="维护与交接手册.md">Markdown 版</a>）</td></tr>
+    <tr><td><a href="性能测试报告.html">性能测试报告</a></td><td>新旧对照实测：扫描 7.2×、启动 3.3×、内存 -40%（另附 <a href="性能测试报告.md">Markdown 版</a>）</td></tr>
+    <tr><td><a href="能力对照清单.html">能力对照与借鉴落地清单</a></td><td>26 项能力矩阵：已落地 18 / 部分 1 / 不采纳 7（附理由）（另附 <a href="能力对照清单.md">Markdown 版</a>）</td></tr>
+    <tr><td><a href="验证记录与验收清单.html">验证记录与验收清单</a></td><td>8 条验收标准逐条对照 + 证据 + 一键复跑指引（另附 <a href="验证记录与验收清单.md">Markdown 版</a>）</td></tr>
+  </table>
+
+  <h2>界面一览</h2>
+  <div class="grid">
+    <div class="shot"><img src="screenshots/ui-02-after-scan.png" alt="扫描结果"><div class="cap">扫描结果：31 类别按大小排列，安全项默认勾选</div></div>
+    <div class="shot"><img src="screenshots/ui-04-confirm-dialog.png" alt="清理确认"><div class="cap">清理确认：数量/大小/风险预览与策略选择</div></div>
+    <div class="shot"><img src="screenshots/ui-07-backup.png" alt="备份与恢复"><div class="cap">备份与恢复：会话管理与恢复入口</div></div>
+    <div class="shot"><img src="screenshots/ui-09-tools.png" alt="工具页"><div class="cap">工具页：还原点 / DISM / 规则更新 / 设置</div></div>
+    <div class="shot"><img src="screenshots/dism-verify.png" alt="组件存储分析"><div class="cap">工具页：组件存储分析输出（中文正常显示）</div></div>
+  </div>
+
+  <h2>安装包与源码</h2>
+  <ul>
+    <li>标准安装包：<code>..\C盘清理助手_v5.0.0_安装包_x64.exe</code>（向导式安装，含开始菜单 / 桌面快捷方式 / 完整卸载）</li>
+    <li>完整源码、构建脚本与测试脚本：<a href="https://github.com/zxiya-6/cdisk-cleaner">GitHub 仓库</a>（已按交付要求移出本机）</li>
+    <li>性能与验收原始数据：<code>data\</code>（基准 / 端到端 / 自检 / 安装卸载日志）</li>
+  </ul>
+
+  <footer>C盘清理助手 v5.0 · 文档中心 · 双击任意 .html 即可离线阅读</footer>
+</div>
+</main>
+</body>
+</html>

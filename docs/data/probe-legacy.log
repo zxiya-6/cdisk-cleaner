@@ -1,0 +1,15 @@
+A ERROR: 由于出现以下错误，无法运行此命令: 系统找不到指定的文件。。
+[16:07:14] B launch->window: 194 ms
+B EXITED early code=-196608
+[16:08:03] A launch->window: 381 ms
+A title='磁盘清理助手' ws=65.4 MB
+A closed
+[16:08:15] B launch->window: 201 ms
+B title='C 盘清理套件 v4.3' ws=198 MB
+B closed
+A run1: launch->title 356 ms, ws=57.7MB
+A run2: launch->title 401 ms, ws=53MB
+A run3: launch->title 408 ms, ws=53MB
+B run1: launch->title 4102 ms, ws=192.9MB
+B run2: launch->title 3598 ms, ws=193.3MB
+B run3: launch->title 3476 ms, ws=192.9MB

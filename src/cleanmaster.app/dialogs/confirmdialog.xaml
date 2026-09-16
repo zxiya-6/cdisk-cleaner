@@ -1,0 +1,27 @@
+﻿<Window x:Class="CleanMaster.App.Dialogs.ConfirmDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="确认" Width="540" SizeToContent="Height" MaxHeight="760"
+        WindowStartupLocation="CenterOwner" ShowInTaskbar="False"
+        Background="{StaticResource BgBrush}" FontFamily="Microsoft YaHei UI, Segoe UI" FontSize="13">
+  <StackPanel Margin="18">
+    <TextBlock x:Name="TxtMessage" TextWrapping="Wrap" FontSize="13.5" Foreground="{StaticResource TextBrush}"/>
+    <Border x:Name="DetailsBox" Visibility="Collapsed" Margin="0,12,0,0" Background="{StaticResource SurfaceBrush}"
+            BorderBrush="{StaticResource EdgeBrush}" BorderThickness="1" CornerRadius="4" Padding="10" MaxHeight="320">
+      <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <ItemsControl x:Name="ListDetails">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate>
+              <TextBlock Text="{Binding}" FontSize="12" Foreground="{StaticResource Text2Brush}" TextWrapping="Wrap" Margin="0,1"/>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </ScrollViewer>
+    </Border>
+    <CheckBox x:Name="ChkRequired" Visibility="Collapsed" Margin="0,14,0,0" FontWeight="SemiBold"/>
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,18,0,0">
+      <Button x:Name="BtnCancel" Content="取消" Width="92" Click="BtnCancel_Click"/>
+      <Button x:Name="BtnOk" Content="确认" Width="116" Margin="10,0,0,0" Click="BtnOk_Click"/>
+    </StackPanel>
+  </StackPanel>
+</Window>

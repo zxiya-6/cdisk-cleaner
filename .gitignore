@@ -1,0 +1,11 @@
+# 构建与发布产物（不入库）
+publish/
+installer/out/
+installer/payload/
+
+# .NET / VS
+bin/
+obj/
+.vs/
+*.user
+*.suo

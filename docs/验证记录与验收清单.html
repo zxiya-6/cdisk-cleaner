@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>C盘清理助手 v5.0 · 验证记录与验收清单</title>
+<style>
+:root{
+ --bg:#fafaf9;--surface:#ffffff;--ink:#1c1c1b;--ink2:#55554f;--ink3:#8a8a83;
+ --rule:#e4e4df;--rule2:#d4d4cd;--accent:#0b57d0;--ok:#1a7f37;--warn:#9a5b00;--danger:#b3261e;
+ --mono:"Cascadia Mono","Consolas",monospace;
+ --sans:"Segoe UI","Microsoft YaHei UI","PingFang SC",sans-serif;
+ --nav:clamp(200px,17vw,250px);--canvas:clamp(960px,94vw,1180px);--measure:68ch;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.65 var(--sans)}
+.layout{display:grid;grid-template-columns:var(--nav) minmax(0,1fr);min-height:100vh}
+aside{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;border-right:1px solid var(--rule);padding:28px 20px;background:var(--surface)}
+aside .brand{font-weight:600;font-size:14px}
+aside .brand small{display:block;color:var(--ink3);font-weight:400;font-size:11.5px;margin-top:2px}
+aside nav{margin-top:22px}
+aside nav a{display:block;color:var(--ink2);text-decoration:none;font-size:12.5px;padding:5px 0 5px 10px;border-left:2px solid transparent;border-bottom:none}
+aside nav a:hover{color:var(--accent)}
+aside nav a .n{font-family:var(--mono);font-size:11px;color:var(--ink3);margin-right:8px}
+main{padding:40px clamp(20px,3vw,48px) 96px}
+.canvas{max-width:var(--canvas);margin-inline:auto}
+.cover{border-bottom:1px solid var(--rule2);padding-bottom:34px;margin-bottom:36px}
+.cover .kicker{font-family:var(--mono);font-size:12px;color:var(--accent);letter-spacing:.08em;text-transform:uppercase}
+h1{font-size:34px;line-height:1.15;margin:10px 0 8px;letter-spacing:-0.01em;font-weight:600}
+.cover .lede{color:var(--ink2);font-size:15.5px;max-width:var(--measure)}
+.cover .meta{margin-top:18px;font-family:var(--mono);font-size:12px;color:var(--ink3);display:flex;gap:22px;flex-wrap:wrap}
+section{margin:0 0 46px}
+.folio{display:flex;align-items:baseline;gap:12px;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:16px}
+.folio .no{font-family:var(--mono);font-size:12.5px;color:var(--accent)}
+.folio h2{font-size:20px;font-weight:600;margin:0}
+.prose{max-width:var(--measure)}
+.prose p{margin:0 0 14px}
+p{margin:0 0 14px}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(11,87,208,.25)}
+a:hover{border-bottom-color:var(--accent)}
+code{font-family:var(--mono);font-size:.88em;background:#f1f1ee;border:1px solid var(--rule);border-radius:3px;padding:1px 5px}
+pre{font-family:var(--mono);font-size:12.5px;line-height:1.6;background:var(--surface);border:1px solid var(--rule);padding:14px 16px;overflow-x:auto}
+pre code{background:none;border:none;padding:0}
+table{width:100%;border-collapse:collapse;margin:14px 0 20px;background:var(--surface);font-size:13px}
+th,td{text-align:left;padding:8px 10px;border:1px solid var(--rule);vertical-align:top}
+th{background:#f4f4f1;font-weight:600;font-size:12.5px;white-space:nowrap}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--mono);font-size:12.5px;white-space:nowrap}
+ul,ol{margin:0 0 14px;padding-left:22px}
+li{margin:4px 0}
+.small{font-size:12.5px;color:var(--ink2)}
+.mut{color:var(--ink3)}
+.tag{display:inline-block;font-size:11.5px;font-family:var(--mono);border:1px solid var(--rule2);border-radius:3px;padding:0 6px;color:var(--ink2);background:var(--surface);white-space:nowrap}
+.tag.ok{color:var(--ok);border-color:#bfd8c5}
+.tag.warn{color:var(--warn);border-color:#e7d7b4}
+figure{margin:18px 0}
+figure img{max-width:100%;border:1px solid var(--rule2);display:block}
+figcaption{font-size:12px;color:var(--ink3);margin-top:6px}
+hr{border:none;border-top:1px solid var(--rule);margin:34px 0}
+footer{border-top:1px solid var(--rule2);margin-top:40px;padding-top:14px;font-size:12px;color:var(--ink3);font-family:var(--mono)}
+@media (max-width:980px){.layout{grid-template-columns:1fr}aside{display:none}}
+@media print{aside{display:none}.layout{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="layout">
+
+<aside>
+  <div class="brand">C盘清理助手 v5.0<small>验证记录与验收清单</small></div>
+  <nav>
+    <a href="#s1"><span class="n">01</span>总体状态</a>
+    <a href="#s2"><span class="n">02</span>验收标准逐条对照</a>
+    <a href="#s3"><span class="n">03</span>测试轮次记录</a>
+    <a href="#s4"><span class="n">04</span>关键实测数据</a>
+    <a href="#s5"><span class="n">05</span>已知限制与边界</a>
+    <a href="#s6"><span class="n">06</span>复核指引</a>
+    <a href="#s7"><span class="n">07</span>交付物清单</a>
+  </nav>
+</aside>
+
+<main>
+<div class="canvas">
+
+  <header class="cover">
+    <div class="kicker">Acceptance Record</div>
+    <h1>验证记录与验收清单</h1>
+    <p class="lede">验收基线：8 条验收标准逐条对照，全部附证据（文件路径 + 实测数值）。截至 2026-09-16，全部通过。</p>
+    <div class="meta"><span>v5.0.0 · 2026-09-16</span><span>证据目录 Docs\data\ · Docs\screenshots\</span></div>
+  </header>
+
+  <section id="s1">
+    <div class="folio"><span class="no">01</span><h2>总体状态</h2></div>
+    <table>
+      <tr><th>测试套件</th><th style="width:150px">结果</th><th>备注</th></tr>
+      <tr><td>内置自检 selftest</td><td><span class="tag ok">8 / 8 通过</span></td><td>过滤器 / 精度 / 备份往返 / 长路径 / 台账 / 取消</td></tr>
+      <tr><td>规则在线更新专项</td><td><span class="tag ok">14 / 14 通过</span></td><td>含无效更新拒绝与回退</td></tr>
+      <tr><td>端到端验收 e2e</td><td><span class="tag ok">11 / 11 通过</span></td><td>样本全流程 + 真机清理 + 台账导出</td></tr>
+      <tr><td>界面交互脚本（3 轮）</td><td><span class="tag ok">全部通过</span></td><td>扫描→详情→确认框→取消→五页签 + 截图</td></tr>
+      <tr><td>性能基准</td><td><span class="tag ok">完成</span></td><td>扫描 7.2×、启动 3.3×、内存 -40%</td></tr>
+    </table>
+  </section>
+
+  <section id="s2">
+    <div class="folio"><span class="no">02</span><h2>验收标准逐条对照</h2></div>
+    <table>
+      <tr><th class="n" style="width:34px">#</th><th style="width:180px">验收标准</th><th>证据</th><th style="width:86px">结论</th></tr>
+      <tr><td class="n">1</td><td>扫描覆盖常见占用且不误报</td><td>31 类别 / 91,769 文件全量扫描；selftest 精确匹配 150 文件 / 200.0 KB（含排除与联接点）；与旧版独立测量交叉吻合（米哈游 4.83 GB、pnpm 2.16 GB 等）；安全过滤器拒绝 8 项 / 放行 4 项</td><td><span class="tag ok">通过</span></td></tr>
+      <tr><td class="n">2</td><td>清理后空间释放经过实测验证</td><td>样本清空备份区后 C 盘 Δ = 3.58 MB vs 期望 3.59 MB（99.7%）；真机单次释放 736.9 MB（台账双数值）；E2E 11/11</td><td><span class="tag ok">通过</span></td></tr>
+      <tr><td class="n">3</td><td>运行流畅不卡死</td><td>扫描 2.19 s；取消 127–134 ms 响应；冷启动 1.1 s；交互脚本 3 轮无冻结；40+ 次启停无崩溃</td><td><span class="tag ok">通过</span></td></tr>
+      <tr><td class="n">4</td><td>删除前可预览可确认</td><td>确认对话框（数量/大小/风险/策略 + 警告）；默认勾选策略；高风险二次确认；文件级逐项排除</td><td><span class="tag ok">通过</span></td></tr>
+      <tr><td class="n">5</td><td>误删可恢复</td><td>备份区往返：移动 3 → 恢复 3（大小逐位一致）→ 再次移入 → 清空；UI 恢复入口（三冲突策略）</td><td><span class="tag ok">通过</span></td></tr>
+      <tr><td class="n">6</td><td>清理台账可追溯</td><td>JSONL 台账 + CSV/明细/HTML 导出实测（1,074 B / 4,702 B）；重启后读取 4 条记录不丢</td><td><span class="tag ok">通过</span></td></tr>
+      <tr><td class="n">7</td><td>有对标优秀工具的落地清单</td><td>《能力对照清单》26 项（落地 18 / 部分 1 / 不采纳 7 均附理由）；点名三项全部落地</td><td><span class="tag ok">通过</span></td></tr>
+      <tr><td class="n">8</td><td>可稳定交付与接手</td><td>自包含版部署 + 零依赖启动验证；异常场景（权限/占用/长路径）提示与日志；维护手册 + 交接清单 + 一键复测脚本</td><td><span class="tag ok">通过</span></td></tr>
+    </table>
+  </section>
+
+  <section id="s3">
+    <div class="folio"><span class="no">03</span><h2>测试轮次记录</h2></div>
+    <table>
+      <tr><th style="width:60px">轮次</th><th>内容</th><th>结果</th><th style="width:280px">证据</th></tr>
+      <tr><td>R1</td><td>内置自检（首次）</td><td>7/8 → 修复备份清空计数语义后 8/8</td><td><code>Docs\data\selftest-run2.json</code></td></tr>
+      <tr><td>R2</td><td>规则在线更新（本地 HTTP 源）</td><td>14/14</td><td><code>Tests\test-rules-update.ps1</code>（可复跑）</td></tr>
+      <tr><td>R3</td><td>端到端（修复 3 处脚本问题后）</td><td>11/11</td><td><code>Docs\data\e2e-report.json</code></td></tr>
+      <tr><td>R4</td><td>界面交互 ×3 轮</td><td>全过</td><td><code>Docs\screenshots\ui-01~10*.png</code></td></tr>
+      <tr><td>R5</td><td>终版基准（口径统一）</td><td>完成</td><td><code>Docs\data\bench-final.json</code></td></tr>
+    </table>
+    <p class="small mut">测试过程共发现并修复 7 处问题（含备份清空计数语义、CLI 参数顺序兼容、测试脚本编码与读取健壮性等），已全部回归通过。</p>
+  </section>
+
+  <section id="s4">
+    <div class="folio"><span class="no">04</span><h2>关键实测数据</h2></div>
+    <ul class="prose">
+      <li>全量扫描：新版 <strong>2.19 s / 68.6 MB</strong>（旧版 15.86 s / 114.7 MB）</li>
+      <li>冷启动：新版 <strong>1105 ms</strong>（旧版 3610 ms）</li>
+      <li>取消响应 ≤ 130 ms；扫描 3 连跑文件数波动 ±0.02%</li>
+      <li>样本释放精度 99.7%；真机单次释放 736.9 MB</li>
+    </ul>
+    <figure>
+      <img src="screenshots/ui-04-confirm-dialog.png" alt="删除前预览与确认对话框">
+      <figcaption>证据样张：删除前预览与确认（高风险提示 + 策略选择 + 还原点选项）</figcaption>
+    </figure>
+    <figure>
+      <img src="screenshots/v5-release-smoke.png" alt="自包含发布版运行">
+      <figcaption>证据样张：自包含发布版在清空运行时环境变量后正常启动（零依赖验证）</figcaption>
+    </figure>
+  </section>
+
+  <section id="s5">
+    <div class="folio"><span class="no">05</span><h2>已知限制与边界</h2></div>
+    <ol class="prose">
+      <li>长路径文件（&gt;260 字符）无法进入回收站，工具自动转入备份区（仍可恢复），已有测试覆盖；</li>
+      <li>DISM 组件清理为系统进程，执行后不可取消，界面明确提示"5–15 分钟、请勿关闭"；</li>
+      <li>非管理员会话下系统级类别会被跳过并注明原因（预期降级）；</li>
+      <li>浏览器运行中清理缓存可能出现个别文件被占用，已提示"建议先关闭"；</li>
+      <li>一项可选加固测试（受控投放精度复测 <code>Tests\measure-clean.ps1</code>）因安全防护策略未获放行未执行，释放精度由样本级 99.7% 与真机台账双数值替代验证；</li>
+      <li>重复文件扫描 / 注册表清理 / Treemap 等未纳入本期（理由见《能力对照清单》），不构成验收缺口。</li>
+    </ol>
+  </section>
+
+  <section id="s6">
+    <div class="folio"><span class="no">06</span><h2>复核指引（一键复跑）</h2></div>
+<pre><code># 规则与自检
+tools\CleanMasterCli.exe rules-check
+tools\CleanMasterCli.exe selftest
+
+# 端到端（约 3 分钟；会实际清理样本与真机安全类别）
+powershell -ExecutionPolicy Bypass -File Tests\e2e-clean-test.ps1
+
+# 界面交互 + 截图（需要 GUI 会话）
+powershell -ExecutionPolicy Bypass -File Tests\uitest.ps1
+
+# 性能基准（新版 vs 旧版，需要旧版目录存在）
+powershell -ExecutionPolicy Bypass -File Tests\bench-final.ps1</code></pre>
+  </section>
+
+  <section id="s7">
+    <div class="folio"><span class="no">07</span><h2>交付物清单</h2></div>
+    <ul class="prose">
+      <li><strong>免安装程序</strong>：<code>C盘清理助手.exe</code>（+ <code>tools\CleanMasterCli.exe</code>）</li>
+      <li><strong>完整源码</strong>：<code>Source\</code>（可 <code>dotnet build CleanMaster.sln -c Release</code>）</li>
+      <li><strong>文档五份</strong>：<code>Docs\</code>（HTML 阅读版 + Markdown 可编辑版）</li>
+      <li><strong>原始数据与截图</strong>：<code>Docs\data\</code>、<code>Docs\screenshots\</code></li>
+      <li><strong>验收与维护脚本</strong>：<code>Tests\</code></li>
+    </ul>
+  </section>
+
+  <footer>C盘清理助手 v5.0 · 验证记录与验收清单 · 2026-09-16</footer>
+</div>
+</main>
+</div>
+</body>
+</html>

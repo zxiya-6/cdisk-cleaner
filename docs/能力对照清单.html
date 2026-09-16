@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>C盘清理助手 v5.0 · 能力对照与借鉴落地清单</title>
+<style>
+:root{
+ --bg:#fafaf9;--surface:#ffffff;--ink:#1c1c1b;--ink2:#55554f;--ink3:#8a8a83;
+ --rule:#e4e4df;--rule2:#d4d4cd;--accent:#0b57d0;--ok:#1a7f37;--warn:#9a5b00;--danger:#b3261e;
+ --mono:"Cascadia Mono","Consolas",monospace;
+ --sans:"Segoe UI","Microsoft YaHei UI","PingFang SC",sans-serif;
+ --nav:clamp(200px,17vw,250px);--canvas:clamp(960px,94vw,1180px);--measure:68ch;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.65 var(--sans)}
+.layout{display:grid;grid-template-columns:var(--nav) minmax(0,1fr);min-height:100vh}
+aside{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;border-right:1px solid var(--rule);padding:28px 20px;background:var(--surface)}
+aside .brand{font-weight:600;font-size:14px}
+aside .brand small{display:block;color:var(--ink3);font-weight:400;font-size:11.5px;margin-top:2px}
+aside nav{margin-top:22px}
+aside nav a{display:block;color:var(--ink2);text-decoration:none;font-size:12.5px;padding:5px 0 5px 10px;border-left:2px solid transparent;border-bottom:none}
+aside nav a:hover{color:var(--accent)}
+aside nav a .n{font-family:var(--mono);font-size:11px;color:var(--ink3);margin-right:8px}
+main{padding:40px clamp(20px,3vw,48px) 96px}
+.canvas{max-width:var(--canvas);margin-inline:auto}
+.cover{border-bottom:1px solid var(--rule2);padding-bottom:34px;margin-bottom:36px}
+.cover .kicker{font-family:var(--mono);font-size:12px;color:var(--accent);letter-spacing:.08em;text-transform:uppercase}
+h1{font-size:34px;line-height:1.15;margin:10px 0 8px;letter-spacing:-0.01em;font-weight:600}
+.cover .lede{color:var(--ink2);font-size:15.5px;max-width:var(--measure)}
+.cover .meta{margin-top:18px;font-family:var(--mono);font-size:12px;color:var(--ink3);display:flex;gap:22px;flex-wrap:wrap}
+section{margin:0 0 46px}
+.folio{display:flex;align-items:baseline;gap:12px;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:16px}
+.folio .no{font-family:var(--mono);font-size:12.5px;color:var(--accent)}
+.folio h2{font-size:20px;font-weight:600;margin:0}
+.prose{max-width:var(--measure)}
+.prose p{margin:0 0 14px}
+p{margin:0 0 14px}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(11,87,208,.25)}
+a:hover{border-bottom-color:var(--accent)}
+code{font-family:var(--mono);font-size:.88em;background:#f1f1ee;border:1px solid var(--rule);border-radius:3px;padding:1px 5px}
+table{width:100%;border-collapse:collapse;margin:14px 0 20px;background:var(--surface);font-size:13px}
+th,td{text-align:left;padding:8px 10px;border:1px solid var(--rule);vertical-align:top}
+th{background:#f4f4f1;font-weight:600;font-size:12.5px;white-space:nowrap}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--mono);font-size:12.5px;white-space:nowrap}
+ul,ol{margin:0 0 14px;padding-left:22px}
+li{margin:4px 0}
+.small{font-size:12.5px;color:var(--ink2)}
+.mut{color:var(--ink3)}
+.tag{display:inline-block;font-size:11.5px;font-family:var(--mono);border:1px solid var(--rule2);border-radius:3px;padding:0 6px;color:var(--ink2);background:var(--surface);white-space:nowrap}
+.tag.ok{color:var(--ok);border-color:#bfd8c5}
+.tag.warn{color:var(--warn);border-color:#e7d7b4}
+.tag.no{color:var(--danger);border-color:#eac3c0}
+hr{border:none;border-top:1px solid var(--rule);margin:34px 0}
+footer{border-top:1px solid var(--rule2);margin-top:40px;padding-top:14px;font-size:12px;color:var(--ink3);font-family:var(--mono)}
+@media (max-width:980px){.layout{grid-template-columns:1fr}aside{display:none}}
+@media print{aside{display:none}.layout{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="layout">
+
+<aside>
+  <div class="brand">C盘清理助手 v5.0<small>能力对照与借鉴落地清单</small></div>
+  <nav>
+    <a href="#s1"><span class="n">01</span>总览</a>
+    <a href="#s2"><span class="n">02</span>能力矩阵（26 项）</a>
+    <a href="#s3"><span class="n">03</span>重点能力落地明细</a>
+    <a href="#s4"><span class="n">04</span>不采纳项与理由</a>
+    <a href="#s5"><span class="n">05</span>借鉴来源声明</a>
+    <a href="#s6"><span class="n">06</span>后续可选增强</a>
+  </nav>
+</aside>
+
+<main>
+<div class="canvas">
+
+  <header class="cover">
+    <div class="kicker">Benchmark &amp; Feature Ledger</div>
+    <h1>主流清理工具能力对照与借鉴落地清单</h1>
+    <p class="lede">对照 CCleaner、BleachBit、Dism++、Wise Disk Cleaner、WizTree、dupeGuru 与 Windows 自带清理能力的公开产品能力：26 项中已落地 18 项、部分采纳 1 项、明确不采纳 7 项。验收点名的"分类可视化 / 规则可维护 / 清理建议分级"三项全部落地。</p>
+    <div class="meta"><span>对照范围：公开产品能力与交互模式</span><span>原则：不逆向、不复用第三方代码与资源</span></div>
+  </header>
+
+  <section id="s1">
+    <div class="folio"><span class="no">01</span><h2>总览</h2></div>
+    <div class="prose">
+      <p>本清单回答两个问题：主流清理工具哪些能力值得借鉴、每一项在 v5.0 里如何落地或为何不采纳。所有"主流工具情况"来自这些产品公开可见的功能界面与说明文档；v5 未使用任何第三方代码、资源、图标或文案。</p>
+    </div>
+    <table>
+      <tr><th>分类</th><th class="n">数量</th><th>说明</th></tr>
+      <tr><td><span class="tag ok">已落地</span></td><td class="n">18</td><td>扫描/预览/分级/备份恢复/台账/大文件/规则更新/取消/降级/长路径/保护名单等</td></tr>
+      <tr><td><span class="tag warn">部分采纳</span></td><td class="n">1</td><td>已装软件查看（只读列表；不提供自动卸载执行）</td></tr>
+      <tr><td><span class="tag no">不采纳</span></td><td class="n">7</td><td>注册表清理、启动项管理、驱动/服务调优、重复文件（本期）、计划任务、账号云、Treemap</td></tr>
+    </table>
+  </section>
+
+  <section id="s2">
+    <div class="folio"><span class="no">02</span><h2>能力矩阵（26 项）</h2></div>
+    <table>
+      <tr><th style="width:36px" class="n">#</th><th style="width:170px">能力</th><th style="width:190px">主流工具情况</th><th>v5 落地方式</th><th style="width:96px">状态</th></tr>
+      <tr><td class="n">1</td><td>分类扫描与统计</td><td>普遍具备</td><td>31 个类别；实时进度；文件数/大小聚合</td><td><span class="tag ok">已落地</span></td></tr>
+      <tr><td class="n">2</td><td>分类可视化</td><td>CCleaner 分类列表</td><td>风险色点 + 大小 + 建议标记；大文件 Top 列表</td><td><span class="tag ok">已落地</span></td></tr>
+      <tr><td class="n">3</td><td>清理建议分级</td><td>CCleaner 默认勾选策略</td><td>安全 / 谨慎 / 高风险三级 + 默认策略 + 二次确认</td><td><span class="tag ok">已落地</span></td></tr>
+      <tr><td class="n">4</td><td>删除前预览与勾选</td><td>CCleaner / BleachBit</td><td>类别级勾选 + 文件级排除 + 清理确认对话框</td><td><span class="tag ok">已落地</span></td></tr>
+      <tr><td class="n">5</td><td>规则库可维护</td><td>BleachBit XML 定义</td><td>JSON 规则库 + 校验命令 + 自定义保护名单</td><td><span class="tag ok">已落地</span></td></tr>
+      <tr><td class="n">6</td><td>规则在线更新</td><td>部分工具有定义更新</td><td>下载→校验→差异预览→备份应用→复核回退；只下载不上传</td><td><span class="tag ok">已落地</span></td></tr>
+      <tr><td class="n">7</td><td>备份区与恢复</td><td>少数工具提供</td><td>同卷秒级移入；逐会话恢复（保留两者/跳过/覆盖）；清空释放</td><td><span class="tag ok">已落地</span></td></tr>
+      <tr><td class="n">8</td><td>移入回收站</td><td>普遍具备</td><td>Trash 策略 + 大文件页回收站删除 + 长路径自动转备份</td><td><span class="tag ok">已落地</span></td></tr>
+      <tr><td class="n">9</td><td>清理台账与导出</td><td>少数工具仅有日志</td><td>JSONL 台账 + CSV / 明细 / HTML 导出</td><td><span class="tag ok">已落地</span></td></tr>
+      <tr><td class="n">10</td><td>释放空间实测记录</td><td>少见</td><td>前后可用空间双数值记录，可核对</td><td><span class="tag ok">已落地</span></td></tr>
+      <tr><td class="n">11</td><td>大文件查找</td><td>WizTree / CCleaner</td><td>根目录与阈值可调、可取消、回收站删除、定位打开</td><td><span class="tag ok">已落地</span></td></tr>
+      <tr><td class="n">12</td><td>系统还原点集成</td><td>CCleaner</td><td>清理前可选创建（失败自动跳过并说明）+ 工具页入口</td><td><span class="tag ok">已落地</span></td></tr>
+      <tr><td class="n">13</td><td>DISM 组件清理</td><td>Dism++ 核心能力</td><td>工具页：分析（只读）+ 清理（高级双确认）</td><td><span class="tag ok">已落地</span></td></tr>
+      <tr><td class="n">14</td><td>随时取消</td><td>主流参差</td><td>扫描/清理/大文件全链路取消，实测 ≈130 ms 响应</td><td><span class="tag ok">已落地</span></td></tr>
+      <tr><td class="n">15</td><td>权限不足降级</td><td>常见直接失败</td><td>优雅降级 + 逐文件原因记录 + 一键提权重启</td><td><span class="tag ok">已落地</span></td></tr>
+      <tr><td class="n">16</td><td>长路径支持</td><td>常被忽略</td><td><code>\\?\</code> 通道；回收站不支持时自动转备份区</td><td><span class="tag ok">已落地</span></td></tr>
+      <tr><td class="n">17</td><td>被占用文件处理</td><td>常静默失败</td><td>跳过 + 原因记录（被占用/无权限）；浏览器运行提示</td><td><span class="tag ok">已落地</span></td></tr>
+      <tr><td class="n">18</td><td>安全保护名单</td><td>BleachBit 白名单思想</td><td>内置多层保护 + 执行期强制 + 自定义扩展</td><td><span class="tag ok">已落地</span></td></tr>
+      <tr><td class="n">19</td><td>已装软件查看</td><td>CCleaner 卸载器</td><td>只读列表 + 跳转系统"应用和功能"（不代执行卸载）</td><td><span class="tag warn">部分采纳</span></td></tr>
+      <tr><td class="n">20</td><td>注册表清理</td><td>CCleaner / Wise</td><td>不采纳：风险与收益不匹配，超出"可安全清理"范围</td><td><span class="tag no">不采纳</span></td></tr>
+      <tr><td class="n">21</td><td>启动项管理</td><td>CCleaner / 360</td><td>不采纳：属系统配置管理而非文件清理</td><td><span class="tag no">不采纳</span></td></tr>
+      <tr><td class="n">22</td><td>驱动/服务调优</td><td>部分"大师"类工具</td><td>不采纳：高风险，明确列入禁止项</td><td><span class="tag no">不采纳</span></td></tr>
+      <tr><td class="n">23</td><td>重复文件扫描</td><td>dupeGuru / CCleaner</td><td>不采纳（本期）：全盘读取破坏快速体验；触碰个人文件保护区；已留独立模块方案</td><td><span class="tag no">不采纳</span></td></tr>
+      <tr><td class="n">24</td><td>计划任务自动清理</td><td>Windows 存储感知</td><td>不采纳（本期）：不做后台静默删除，删除必须经"预览→确认→台账"</td><td><span class="tag no">不采纳</span></td></tr>
+      <tr><td class="n">25</td><td>账号 / 云同步</td><td>商业工具</td><td>不采纳：本地单机、零上传</td><td><span class="tag no">不采纳</span></td></tr>
+      <tr><td class="n">26</td><td>Treemap 占用可视化</td><td>SpaceSniffer / WizTree</td><td>不采纳（本期）：列表 + 占比覆盖主场景；仍可用旧版目录内 SpaceSniffer</td><td><span class="tag no">不采纳</span></td></tr>
+    </table>
+  </section>
+
+  <section id="s3">
+    <div class="folio"><span class="no">03</span><h2>重点能力落地明细</h2></div>
+    <div class="prose">
+      <p><strong>分类可视化</strong>：类别行内含风险色点（安全绿 / 谨慎黄 / 高风险红），大小列显示可读体积；右侧详情面板展示 Top 文件、扫描位置与被跳过项；大文件页给出全盘 Top 列表并支持回收站删除。相比位图式 treemap，信息密度更高、无障碍更好、性能更稳。</p>
+      <p><strong>规则可维护</strong>：所有类别、路径模板（含 <code>%ENV%</code> 与通配段）、文件过滤、风险等级、默认勾选、管理员要求、最小文件年龄均在 <code>rules\rules.json</code> 声明；改规则不改代码；<code>rules-check</code> 一键校验；<code>protected.json</code> 追加自定义保护目录；并支持在线更新与本地导入。</p>
+      <p><strong>清理建议分级</strong>：安全级=可自动重建的缓存/临时文件（默认勾选）；谨慎级=影响体验或有恢复成本（默认不勾选、黄色标识、确认框逐项提示）；高风险级=不可逆操作（默认不勾选 + "我已了解"勾选后放行）。</p>
+    </div>
+  </section>
+
+  <section id="s4">
+    <div class="folio"><span class="no">04</span><h2>不采纳项与完整理由</h2></div>
+    <ul class="prose">
+      <li><strong>重复文件扫描</strong>：内容级去重要全盘读取（分钟级起步，破坏"3 秒扫描"体验）；删除重复文件天然触碰个人文档/照片保护区，与"只清可再生成垃圾"的定位冲突；对标工具普遍做成独立模块。后续方案：独立"重复文件"模块（只读检测、仅移回收站、默认全不选、保护个人目录树）。</li>
+      <li><strong>注册表清理 / 启动项管理 / 驱动与服务调优</strong>：与"安全、快速、可追溯"的定位冲突；出错修复成本高，且与验收边界（不做注册表深度清理、驱动级优化、系统服务调优）明确不符。</li>
+      <li><strong>计划任务自动清理</strong>：后台静默删除在本工具语境下不可接受；所有删除都必须经过"预览→确认→台账"链路。</li>
+      <li><strong>账号 / 云同步</strong>：坚持本地单机；规则在线更新为"只下载不上传"，不引入任何账号体系。</li>
+      <li><strong>Treemap</strong>：交互成本高、信息密度低于列表方案；如需方块图分析，仍可使用旧版目录内附带的 SpaceSniffer。</li>
+    </ul>
+  </section>
+
+  <section id="s5">
+    <div class="folio"><span class="no">05</span><h2>借鉴来源声明</h2></div>
+    <div class="prose">
+      <p>本清单中的"主流工具情况"均来自这些产品公开可见的功能界面与说明文档，属于行业通用交互模式（分类扫描、建议分级、白名单、回收站、组件清理等）。未使用任何第三方工具的代码、资源、图标或文案；未进行反编译或逆向工程。</p>
+    </div>
+  </section>
+
+  <section id="s6">
+    <div class="folio"><span class="no">06</span><h2>后续可选增强（按建议优先级）</h2></div>
+    <ol class="prose">
+      <li>重复文件独立模块（只读检测 + 回收站 + 目录保护）</li>
+      <li>规则更新源签名校验（SHA-256 固定 / 签名文件）</li>
+      <li>清理前导出"本次计划 JSON"（供审计与复现）</li>
+      <li>便携模式一键切换（写入 <code>portable.flag</code> 的图形入口）</li>
+    </ol>
+  </section>
+
+  <footer>C盘清理助手 v5.0 · 能力对照与借鉴落地清单 · 2026-09-16</footer>
+</div>
+</main>
+</div>
+</body>
+</html>
