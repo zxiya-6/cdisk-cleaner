@@ -1,0 +1,40 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanMaster.Core", "src\CleanMaster.Core\CleanMaster.Core.csproj", "{F7AFE076-8E96-4C19-8525-D108ADCF2E53}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanMaster.Cli", "src\CleanMaster.Cli\CleanMaster.Cli.csproj", "{83FA78E6-B3E9-4224-906D-631F6E3F322B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanMaster.App", "src\CleanMaster.App\CleanMaster.App.csproj", "{04FDDE20-035A-480A-B0D0-1615064114CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanMaster.App.HeadlessTests", "tests\CleanMaster.App.HeadlessTests\CleanMaster.App.HeadlessTests.csproj", "{0762427F-F52D-4B04-8317-00ECBB1561D2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F7AFE076-8E96-4C19-8525-D108ADCF2E53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7AFE076-8E96-4C19-8525-D108ADCF2E53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7AFE076-8E96-4C19-8525-D108ADCF2E53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7AFE076-8E96-4C19-8525-D108ADCF2E53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83FA78E6-B3E9-4224-906D-631F6E3F322B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83FA78E6-B3E9-4224-906D-631F6E3F322B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83FA78E6-B3E9-4224-906D-631F6E3F322B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83FA78E6-B3E9-4224-906D-631F6E3F322B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04FDDE20-035A-480A-B0D0-1615064114CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04FDDE20-035A-480A-B0D0-1615064114CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04FDDE20-035A-480A-B0D0-1615064114CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04FDDE20-035A-480A-B0D0-1615064114CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0762427F-F52D-4B04-8317-00ECBB1561D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0762427F-F52D-4B04-8317-00ECBB1561D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0762427F-F52D-4B04-8317-00ECBB1561D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0762427F-F52D-4B04-8317-00ECBB1561D2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

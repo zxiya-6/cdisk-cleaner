@@ -1,0 +1,4 @@
+{
+  "note": "Linux 版自定义保护路径。内置保护已覆盖系统目录与当前用户个人目录；此处用于追加个性化保护（如游戏库、虚拟机镜像、wine 目录等），示例：\"/home/<用户名>/.local/share/Steam\"、\"/home/<用户名>/.wine\"、\"/home/<用户名>/VirtualBox VMs\"。列表为空表示不追加。",
+  "customDeny": []
+}

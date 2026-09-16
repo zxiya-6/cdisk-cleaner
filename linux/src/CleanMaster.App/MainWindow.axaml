@@ -1,0 +1,219 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="using:CleanMaster.App"
+        x:Class="CleanMaster.App.MainWindow"
+        Title="磁盘清理助手（Linux 版）"
+        Width="1020" Height="700"
+        MinWidth="820" MinHeight="560"
+        FontFamily="Noto Sans CJK SC, Inter, sans-serif"
+        WindowStartupLocation="CenterScreen">
+
+  <Window.Styles>
+    <Style Selector="Button.accent">
+      <Setter Property="Background" Value="#2E7D32"/>
+      <Setter Property="Foreground" Value="White"/>
+      <Setter Property="CornerRadius" Value="4"/>
+    </Style>
+    <Style Selector="Button.accent:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="#1B5E20"/>
+    </Style>
+    <Style Selector="Button.danger">
+      <Setter Property="Background" Value="#C62828"/>
+      <Setter Property="Foreground" Value="White"/>
+      <Setter Property="CornerRadius" Value="4"/>
+    </Style>
+    <Style Selector="Button.danger:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="#8E0000"/>
+    </Style>
+    <Style Selector="TextBlock.sectionTitle">
+      <Setter Property="FontSize" Value="15"/>
+      <Setter Property="FontWeight" Value="SemiBold"/>
+      <Setter Property="Margin" Value="0,6,0,4"/>
+    </Style>
+  </Window.Styles>
+
+  <Grid RowDefinitions="Auto,*">
+
+    <!-- 顶栏 -->
+    <Border Grid.Row="0" Background="#2E7D32" Padding="14,10">
+      <Grid ColumnDefinitions="Auto,*,Auto">
+        <StackPanel Orientation="Horizontal" Spacing="10">
+          <TextBlock Text="磁盘清理助手" FontSize="18" FontWeight="Bold" Foreground="White" VerticalAlignment="Center"/>
+          <TextBlock x:Name="VersionText" FontSize="12" Foreground="#DDFFFFFF" VerticalAlignment="Center"/>
+        </StackPanel>
+        <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="12">
+          <TextBlock x:Name="AdminText" FontSize="12" Foreground="#FFFFE082" VerticalAlignment="Center"/>
+          <TextBlock x:Name="FreeSpaceText" FontSize="12" Foreground="White" VerticalAlignment="Center"/>
+        </StackPanel>
+      </Grid>
+    </Border>
+
+    <TabControl Grid.Row="1" Margin="8,6">
+
+      <!-- ================= 扫描清理 ================= -->
+      <TabItem Header="扫描清理">
+        <DockPanel>
+          <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Spacing="8" Margin="8,4">
+            <Button x:Name="BtnScan" Content="开始扫描" Classes="accent" Click="BtnScan_Click"/>
+            <Button x:Name="BtnSelectRecommended" Content="全选推荐" Click="BtnSelectRecommended_Click"/>
+            <Button x:Name="BtnUnselectAll" Content="全不选" Click="BtnUnselectAll_Click"/>
+            <Button x:Name="BtnCancel" Content="取消" IsEnabled="False" Click="BtnCancel_Click"/>
+            <Button x:Name="BtnClean" Content="清理选中…" Classes="danger" IsEnabled="False" Click="BtnClean_Click"/>
+            <TextBlock x:Name="SelectedSizeText" VerticalAlignment="Center" FontWeight="SemiBold" Margin="12,0,0,0"/>
+          </StackPanel>
+
+          <StackPanel DockPanel.Dock="Bottom" Margin="8,4">
+            <ProgressBar x:Name="Progress" Height="6" IsVisible="False" Minimum="0" Maximum="100"/>
+            <TextBlock x:Name="StatusText" Margin="0,4,0,0" TextWrapping="Wrap" FontSize="12"/>
+          </StackPanel>
+
+          <ScrollViewer>
+            <ItemsControl x:Name="CatList">
+              <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="local:CategoryItemVM">
+                  <Border BorderBrush="#22000000" BorderThickness="0,0,0,1" Padding="8,7">
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                      <CheckBox IsChecked="{Binding IsChecked}" VerticalAlignment="Top" Margin="0,2,0,0"/>
+                      <StackPanel Grid.Column="1">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                          <TextBlock Text="{Binding Name}" FontWeight="SemiBold" FontSize="13"/>
+                          <Border Background="{Binding RiskBrush}" CornerRadius="3" Padding="5,1">
+                            <TextBlock Text="{Binding RiskText}" FontSize="10" Foreground="White"/>
+                          </Border>
+                          <Border x:Name="AdminTag" IsVisible="{Binding RequiresAdmin}" Background="#E8EAF6" CornerRadius="3" Padding="5,1">
+                            <TextBlock Text="需管理员" FontSize="10" Foreground="#283593"/>
+                          </Border>
+                        </StackPanel>
+                        <TextBlock Text="{Binding Note}" FontSize="11" Opacity="0.72" TextWrapping="Wrap" Margin="0,2,0,0"/>
+                      </StackPanel>
+                      <StackPanel Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Top">
+                        <TextBlock Text="{Binding SizeText}" FontSize="13" FontWeight="Bold" HorizontalAlignment="Right"/>
+                        <TextBlock Text="{Binding StrategyText}" FontSize="10" Opacity="0.6" HorizontalAlignment="Right"/>
+                      </StackPanel>
+                    </Grid>
+                  </Border>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </ScrollViewer>
+        </DockPanel>
+      </TabItem>
+
+      <!-- ================= 备份区 ================= -->
+      <TabItem Header="备份区">
+        <DockPanel>
+          <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Spacing="8" Margin="8,4">
+            <Button x:Name="BtnRefreshBackup" Content="刷新" Click="BtnRefreshBackup_Click"/>
+            <Button x:Name="BtnRestore" Content="恢复选中…" Classes="accent" Click="BtnRestore_Click"/>
+            <Button x:Name="BtnPurge" Content="清空选中…" Click="BtnPurge_Click"/>
+            <Button x:Name="BtnPurgeAll" Content="清空全部…" Click="BtnPurgeAll_Click"/>
+          </StackPanel>
+          <TextBlock DockPanel.Dock="Bottom" x:Name="BackupStatus" Margin="8,4" TextWrapping="Wrap" FontSize="12"/>
+          <ScrollViewer>
+            <ItemsControl x:Name="BackupList">
+              <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="local:BackupItemVM">
+                  <Border BorderBrush="#22000000" BorderThickness="0,0,0,1" Padding="8,7">
+                    <Grid ColumnDefinitions="Auto,*,Auto,Auto" ColumnSpacing="12">
+                      <CheckBox IsChecked="{Binding IsChecked}" VerticalAlignment="Center"/>
+                      <StackPanel Grid.Column="1">
+                        <TextBlock Text="{Binding Name}" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="{Binding Detail}" FontSize="11" Opacity="0.7"/>
+                      </StackPanel>
+                      <TextBlock Grid.Column="2" Text="{Binding SizeText}" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                      <TextBlock Grid.Column="3" Text="{Binding StateText}" VerticalAlignment="Center" FontSize="11"/>
+                    </Grid>
+                  </Border>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </ScrollViewer>
+        </DockPanel>
+      </TabItem>
+
+      <!-- ================= 台账 ================= -->
+      <TabItem Header="台账">
+        <DockPanel>
+          <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Spacing="8" Margin="8,4">
+            <Button x:Name="BtnRefreshLedger" Content="刷新" Click="BtnRefreshLedger_Click"/>
+            <Button x:Name="BtnExportCsv" Content="导出 CSV…" Click="BtnExportCsv_Click"/>
+            <Button x:Name="BtnExportHtml" Content="导出 HTML 报告…" Click="BtnExportHtml_Click"/>
+          </StackPanel>
+          <ScrollViewer>
+            <ItemsControl x:Name="LedgerList">
+              <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="local:LedgerItemVM">
+                  <Border BorderBrush="#22000000" BorderThickness="0,0,0,1" Padding="8,5">
+                    <Grid ColumnDefinitions="Auto,*,Auto,Auto,Auto" ColumnSpacing="14">
+                      <TextBlock Text="{Binding TimeText}" FontSize="11" Opacity="0.7" VerticalAlignment="Center"/>
+                      <TextBlock Grid.Column="1" Text="{Binding KindText}" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                      <TextBlock Grid.Column="2" Text="{Binding Detail}" FontSize="11" VerticalAlignment="Center"/>
+                      <TextBlock Grid.Column="3" Text="{Binding SizeText}" FontSize="11" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                      <TextBlock Grid.Column="4" Text="{Binding Id}" FontSize="10" Opacity="0.5" VerticalAlignment="Center"/>
+                    </Grid>
+                  </Border>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </ScrollViewer>
+        </DockPanel>
+      </TabItem>
+
+      <!-- ================= 规则 ================= -->
+      <TabItem Header="规则">
+        <DockPanel Margin="8">
+          <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Spacing="8" Margin="0,4">
+            <Button x:Name="BtnRulesCheck" Content="校验规则库" Click="BtnRulesCheck_Click"/>
+            <Button x:Name="BtnRulesUpdate" Content="检查在线更新…" Click="BtnRulesUpdate_Click"/>
+          </StackPanel>
+          <TextBox x:Name="RulesLog" IsReadOnly="True" AcceptsReturn="True" TextWrapping="Wrap"
+                   FontFamily="Consolas, monospace" FontSize="12"/>
+        </DockPanel>
+      </TabItem>
+
+      <!-- ================= 自检 ================= -->
+      <TabItem Header="自检">
+        <DockPanel Margin="8">
+          <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Spacing="8" Margin="0,4">
+            <Button x:Name="BtnSelfTest" Content="运行自检" Classes="accent" Click="BtnSelfTest_Click"/>
+          </StackPanel>
+          <ScrollViewer>
+            <ItemsControl x:Name="SelftestList">
+              <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="local:SelftestItemVM">
+                  <Border BorderBrush="#22000000" BorderThickness="0,0,0,1" Padding="8,5">
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                      <TextBlock Text="{Binding PassText}" FontWeight="Bold" VerticalAlignment="Center"/>
+                      <TextBlock Grid.Column="1" Text="{Binding Name}" VerticalAlignment="Center"/>
+                      <TextBlock Grid.Column="2" Text="{Binding Detail}" FontSize="11" Opacity="0.7" TextTrimming="CharacterEllipsis" MaxWidth="420"/>
+                    </Grid>
+                  </Border>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </ScrollViewer>
+        </DockPanel>
+      </TabItem>
+
+      <!-- ================= 关于 ================= -->
+      <TabItem Header="关于">
+        <StackPanel Margin="18" Spacing="8">
+          <TextBlock Text="磁盘清理助手（Linux 版）" FontSize="20" FontWeight="Bold"/>
+          <TextBlock x:Name="AboutVersion" FontSize="13"/>
+          <TextBlock x:Name="AboutOs" FontSize="12" Opacity="0.75"/>
+          <TextBlock x:Name="AboutDataDir" FontSize="12" Opacity="0.75" TextWrapping="Wrap"/>
+          <TextBlock x:Name="AboutRulesDir" FontSize="12" Opacity="0.75" TextWrapping="Wrap"/>
+          <Separator Margin="0,6"/>
+          <TextBlock Text="设计原则" FontSize="13" FontWeight="SemiBold"/>
+          <TextBlock Text="• 数据不出本机：所有扫描结果、台账、备份均保存在本地，无任何上传行为。" FontSize="12"/>
+          <TextBlock Text="• 安全优先：系统目录、个人文档与密钥目录内置保护名单，宁误挡不误删；高风险类别默认不勾选。" FontSize="12"/>
+          <TextBlock Text="• 删除可恢复：备份区一键恢复；回收站策略移入 freedesktop 回收站。" FontSize="12"/>
+          <TextBlock Text="• 离线可用：不含 Docker 缓存、旧内核、系统快照等高风险清理项。" FontSize="12"/>
+          <Separator Margin="0,6"/>
+          <TextBlock Text="命令行工具：cleanmaster（scan / clean / backup-restore / ledger / selftest / journal-vacuum 等）" FontSize="12" Opacity="0.8" TextWrapping="Wrap"/>
+        </StackPanel>
+      </TabItem>
+
+    </TabControl>
+  </Grid>
+</Window>

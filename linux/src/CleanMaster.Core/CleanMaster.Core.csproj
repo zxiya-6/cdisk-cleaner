@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>12</LangVersion>
+    <RootNamespace>CleanMaster.Core</RootNamespace>
+    <AssemblyName>CleanMaster.Core</AssemblyName>
+    <Version>1.0.0</Version>
+    <Description>磁盘清理助手 Linux 版核心引擎</Description>
+    <NoWarn>$(NoWarn);CA1416</NoWarn>
+  </PropertyGroup>
+
+</Project>

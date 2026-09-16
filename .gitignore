@@ -3,6 +3,10 @@ publish/
 installer/out/
 installer/payload/
 
+# Linux 版：安装包不入库（经 GitHub Release 分发），构建中间目录在 WSL 侧 ~/packages
+linux/installer/dist/
+linux/installer/stage/
+
 # .NET / VS
 bin/
 obj/
